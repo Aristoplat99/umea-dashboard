@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umeå Bostadsdashboard</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a1a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bostäder">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+  header {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
+  .stats {
+    display: flex;
+    gap: 1.2rem;
+    font-size: 0.9rem;
+    color: #aab;
+  }
+  .stats strong { color: #fff; }
+  .updated { font-size: 0.8rem; color: #778; }
+
+  .controls {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .filter-btn {
+    border: 2px solid transparent;
+    background: #f0f2f5;
+    color: #444;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+  .filter-btn:hover {
+    background: #e2e4e8;
+  }
+  .filter-btn.active {
+    background: var(--accent, #1a1a2e);
+    color: #fff;
+    border-color: var(--accent, #1a1a2e);
+  }
+  .toggle-new {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #555;
+    cursor: pointer;
+  }
+  .toggle-new input { cursor: pointer; accent-color: #e74c3c; width: 1rem; height: 1rem; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  .card[hidden] { display: none; }
+  .card-header {
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+  }
+  .landlord-name { font-weight: 700; font-size: 0.9rem; letter-spacing: 0.3px; }
+  .badge-new {
+    background: #fff;
+    color: #e74c3c;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+  }
+  .card-body {
+    padding: 0.9rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .listing-text {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #333;
+    word-break: break-word;
+  }
+  .link-btn {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 0.35rem 0.9rem;
+    background: var(--accent, #333);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .link-btn:hover { opacity: 0.85; }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: #888;
+    font-size: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Umeå Bostadsdashboard</h1>
+  <div class="stats">
+    <span><strong>48</strong> lägenheter</span>
+    <span><strong id="visible-count">48</strong> visas</span>
+    <span><strong style="color:#ff6b6b">25</strong> nya sedan igår</span>
+  </div>
+  <span class="updated">Uppdaterad 2026-05-21 15:47</span>
+</header>
+
+<div class="controls">
+  <button class="filter-btn active" onclick="filterLandlord('all', this)">Alla</button>
+<button class="filter-btn" style="--accent:#8e44ad" onclick="filterLandlord('Balticgruppen', this)">Balticgruppen</button>
+<button class="filter-btn" style="--accent:#e07b39" onclick="filterLandlord('Bostaden', this)">Bostaden</button>
+<button class="filter-btn" style="--accent:#4f86c6" onclick="filterLandlord('Buref', this)">Buref</button>
+<button class="filter-btn" style="--accent:#d35400" onclick="filterLandlord('Grannstaden', this)">Grannstaden</button>
+<button class="filter-btn" style="--accent:#f39c12" onclick="filterLandlord('HSB', this)">HSB</button>
+<button class="filter-btn" style="--accent:#2980b9" onclick="filterLandlord('Heimstaden', this)">Heimstaden</button>
+<button class="filter-btn" style="--accent:#16a085" onclick="filterLandlord('Lansa', this)">Lansa</button>
+<button class="filter-btn" style="--accent:#9b59b6" onclick="filterLandlord('Lerstenen', this)">Lerstenen</button>
+<button class="filter-btn" style="--accent:#27ae60" onclick="filterLandlord('Mofab', this)">Mofab</button>
+<button class="filter-btn" style="--accent:#e74c3c" onclick="filterLandlord('Riksbyggen', this)">Riksbyggen</button>
+<button class="filter-btn" style="--accent:#1abc9c" onclick="filterLandlord('Rikshem', this)">Rikshem</button>
+<button class="filter-btn" style="--accent:#6ab04c" onclick="filterLandlord('Sveafastigheter', this)">Sveafastigheter</button>
+
+  <label class="toggle-new">
+    <input type="checkbox" id="only-new" onchange="applyFilters()">
+    Visa bara nya
+  </label>
+</div>
+
+<div class="grid" id="grid">
+
+<div class="card" data-landlord="Balticgruppen" data-new="0">
+  <div class="card-header" style="background:#8e44ad">
+    <span class="landlord-name">Balticgruppen</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Inga lediga lagenheter just nu</p>
+    <a href="https://balticgruppen.se/" target="_blank" class="link-btn" style="--accent:#8e44ad">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Axtorpsvägen 38 A | 7710 kr/mån | 78 kvm | 4 Rum och kök | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/2703001180115/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Fysikgränd 3 H | 4475 kr/mån | 30 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3301002080104/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Gluntens Väg 19 | 4300 kr/mån | 40 kvm | 1 Rum och kök | Inflyttning: 2026-08-15 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3201008010003/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Gluntens Väg 9 | 5009 kr/mån | 36 kvm | 2 Rum med pentry | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3201302010312/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 1 A | 4828 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-06-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302002010427/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 1 B | 4600 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-07-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302001020039/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 1 C | 4824 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302001010436/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 1 D | 4685 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302003010236/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 11 B | 8918 kr/mån | 68 kvm | 3 Rum och kök | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302010020101/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 11 G | 10643 kr/mån | 83 kvm | 4 Rum och kök | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302012010301/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 11 G | 4962 kr/mån | 33 kvm | 1 Rum och kokv | Inflyttning: 2026-07-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302012010010/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 11 J | 8976 kr/mån | 68 kvm | 3 Rum och kök | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302011020303/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 3 F | 10189 kr/mån | 81 kvm | 4 Rum och kök | Inflyttning: 2026-07-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302004010201/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 5 A | 4850 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302015020440/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Pedagoggränd 9 A | 5559 kr/mån | 30 kvm | 1 Rum alkov och kokvrå | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302013020035/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Rullstensgatan 19 | 4810 kr/mån | 43 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/2803005010205/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Rullstensgatan 28 | 5267 kr/mån | 43 kvm | 2 Rum och kök | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/2802016020001/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Bostaden" data-new="1">
+  <div class="card-header" style="background:#e07b39">
+    <span class="landlord-name">Bostaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Stipendiegränd 6 D | 6607 kr/mån | 60 kvm | 2 Rum och kök | Inflyttning: 2026-08-01 |</p>
+    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3305009030002/" target="_blank" class="link-btn" style="--accent:#e07b39">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Buref" data-new="0">
+  <div class="card-header" style="background:#4f86c6">
+    <span class="landlord-name">Buref</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Lgh 02:17, Sofiehemsvägen 76B: 1 Rkv, våning 1tr,  22kvm, 4.219kr/månad         Ledig från 2026-06-01, eller tidigare</p>
+    <a href="https://buref.se/lediga-lagenheter/" target="_blank" class="link-btn" style="--accent:#4f86c6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Buref" data-new="0">
+  <div class="card-header" style="background:#4f86c6">
+    <span class="landlord-name">Buref</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Lgh 1002, Lagmansgatan 33B: 1 Roka, våning E,  31kvm, 7.819kr/månad         Ledig från 2026-06-01</p>
+    <a href="https://buref.se/lediga-lagenheter/" target="_blank" class="link-btn" style="--accent:#4f86c6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Buref" data-new="0">
+  <div class="card-header" style="background:#4f86c6">
+    <span class="landlord-name">Buref</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Lgh 1104, Kungsgårdsvägen 63: 2 Rok, våning 1tr,  53,7kvm, 10.159kr/månad         Ledig för omgående inflytt</p>
+    <a href="https://buref.se/lediga-lagenheter/" target="_blank" class="link-btn" style="--accent:#4f86c6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Buref" data-new="1">
+  <div class="card-header" style="background:#4f86c6">
+    <span class="landlord-name">Buref</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Lgh 1202, Lagmansgatan 33B: 2 Rok, våning 2tr, 44,3kvm, 9.401kr/månad        Ledig för omgående inflytt</p>
+    <a href="https://buref.se/lediga-lagenheter/" target="_blank" class="link-btn" style="--accent:#4f86c6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Buref" data-new="0">
+  <div class="card-header" style="background:#4f86c6">
+    <span class="landlord-name">Buref</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Lgh 1401, Kungsgårdsvägen 63: 3 Rok, Våning 3, 59,4kvm, 11.228kr/månad Ledig från 2026-08-01</p>
+    <a href="https://buref.se/lediga-lagenheter/" target="_blank" class="link-btn" style="--accent:#4f86c6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Buref" data-new="0">
+  <div class="card-header" style="background:#4f86c6">
+    <span class="landlord-name">Buref</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Lgh 1403, Kungsgårdsvägen 63: 2 Rok, våning 4tr,  53,5kvm, 10.244kr/månad         Ledig för omgående inflytt</p>
+    <a href="https://buref.se/lediga-lagenheter/" target="_blank" class="link-btn" style="--accent:#4f86c6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Grannstaden" data-new="1">
+  <div class="card-header" style="background:#d35400">
+    <span class="landlord-name">Grannstaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Inga lediga lagenheter just nu</p>
+    <a href="https://grannstaden.se/" target="_blank" class="link-btn" style="--accent:#d35400">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Heimstaden" data-new="1">
+  <div class="card-header" style="background:#2980b9">
+    <span class="landlord-name">Heimstaden</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Gnejsvägen 8 B | 48 m² | 8 317 kr/månad |</p>
+    <a href="https://heimstaden.com/se/sok-lagenhet/Umea-48m²-1196132-1001" target="_blank" class="link-btn" style="--accent:#2980b9">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Heimstaden" data-new="0">
+  <div class="card-header" style="background:#2980b9">
+    <span class="landlord-name">Heimstaden</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Kvartsvägen 3 B | 48 m² | 9 636 kr/månad |</p>
+    <a href="https://heimstaden.com/se/sok-lagenhet/Umea-48m²-1286101-1203" target="_blank" class="link-btn" style="--accent:#2980b9">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Heimstaden" data-new="0">
+  <div class="card-header" style="background:#2980b9">
+    <span class="landlord-name">Heimstaden</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Mariehemsvägen 21 G | 74 m² | 8 392 kr/månad |</p>
+    <a href="https://heimstaden.com/se/sok-lagenhet/Umea-74m²-1198107-1103" target="_blank" class="link-btn" style="--accent:#2980b9">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="HSB" data-new="0">
+  <div class="card-header" style="background:#f39c12">
+    <span class="landlord-name">HSB</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Filgränd 75 A Umeå, Östra Ersboda 1 rok | 37,2 kvm | Vån 2 | Hyra 4 873 kr Inflytt: 2026-07-01 |</p>
+    <a href="https://www.hsb.se/sok-bostad/sok-hyresratter/vasterbotten/umea/fastigheter/krukan-17/58/" target="_blank" class="link-btn" style="--accent:#f39c12">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Lansa" data-new="0">
+  <div class="card-header" style="background:#16a085">
+    <span class="landlord-name">Lansa</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Inga lediga lagenheter just nu</p>
+    <a href="https://www.lansa.se/" target="_blank" class="link-btn" style="--accent:#16a085">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Lerstenen" data-new="1">
+  <div class="card-header" style="background:#9b59b6">
+    <span class="landlord-name">Lerstenen</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Grisbacka | Lagmansgatan 6 B | 5 rok | 92.6 m² | bv | 14547 kr | 2026-09-01 | Till­gänglig från: | –</p>
+    <a href="https://lerstenen.se/bostad/5269" target="_blank" class="link-btn" style="--accent:#9b59b6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Lerstenen" data-new="0">
+  <div class="card-header" style="background:#9b59b6">
+    <span class="landlord-name">Lerstenen</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Sandåkern | Frida Åslunds gränd 6 | 3 rok | 70 m² | 3 tr | 11251 kr | 2026-09-01 | Till­gänglig från: | 2026-08-01</p>
+    <a href="https://lerstenen.se/bostad/4675" target="_blank" class="link-btn" style="--accent:#9b59b6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Lerstenen" data-new="0">
+  <div class="card-header" style="background:#9b59b6">
+    <span class="landlord-name">Lerstenen</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Tomtebo | Lyktvägen 8 | 2 rok | 51.8 m² | 1 tr | 9013 kr | 2026-09-01 | Till­gänglig från: | –</p>
+    <a href="https://lerstenen.se/bostad/4912" target="_blank" class="link-btn" style="--accent:#9b59b6">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Mofab" data-new="1">
+  <div class="card-header" style="background:#27ae60">
+    <span class="landlord-name">Mofab</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">V. Norrlandsgatan 29 | 153 kvm | vån Plan 3-4 | Från 2026-06-01 |</p>
+    <a href="https://mofab.se/fastigheter/v-norrlandsgatan-29-umea/" target="_blank" class="link-btn" style="--accent:#27ae60">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Riksbyggen" data-new="0">
+  <div class="card-header" style="background:#e74c3c">
+    <span class="landlord-name">Riksbyggen</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Istidsgatan 11A   Istidsgatan 11A, Umeå Månadshyra 7 864 kr/mån Antal rum 2 rok Storlek 48 kvm</p>
+    <a href="https://www.homeq.se/lagenhet/256488-2rum-umeå-västerbottens-län-istidsgatan-11a" target="_blank" class="link-btn" style="--accent:#e74c3c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Rikshem" data-new="0">
+  <div class="card-header" style="background:#1abc9c">
+    <span class="landlord-name">Rikshem</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Mariehem Mariehemsvägen 35 A | 3 rum | 87 m² | 11 229 kr/mån</p>
+    <a href="https://minasidor.rikshem.se/ledigt/detalj/id/2571-1156" target="_blank" class="link-btn" style="--accent:#1abc9c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Rikshem" data-new="1">
+  <div class="card-header" style="background:#1abc9c">
+    <span class="landlord-name">Rikshem</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Mariehem Mariehemsvägen 41 N | 1 rum | 47 m² | 5 773 kr/mån</p>
+    <a href="https://minasidor.rikshem.se/ledigt/detalj/id/2572-0019" target="_blank" class="link-btn" style="--accent:#1abc9c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Rikshem" data-new="0">
+  <div class="card-header" style="background:#1abc9c">
+    <span class="landlord-name">Rikshem</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Mariehem Morkullevägen 18 C | 3 rum | 78 m² | 11 305 kr/mån</p>
+    <a href="https://minasidor.rikshem.se/ledigt/detalj/id/4816-181116" target="_blank" class="link-btn" style="--accent:#1abc9c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Rikshem" data-new="1">
+  <div class="card-header" style="background:#1abc9c">
+    <span class="landlord-name">Rikshem</span>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Mariehem Morkullevägen 20 B | 2 rum | 40 m² | 7 109 kr/mån</p>
+    <a href="https://minasidor.rikshem.se/ledigt/detalj/id/4816-20021307" target="_blank" class="link-btn" style="--accent:#1abc9c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0">
+  <div class="card-header" style="background:#6ab04c">
+    <span class="landlord-name">Sveafastigheter</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Filgränd 25 | 70.8 m² | 8415 kr / mån</p>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/filgrand-25" target="_blank" class="link-btn" style="--accent:#6ab04c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0">
+  <div class="card-header" style="background:#6ab04c">
+    <span class="landlord-name">Sveafastigheter</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Gärdesvägen 4 | 31 m² | 6555 kr / mån</p>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/gardesvagen-4" target="_blank" class="link-btn" style="--accent:#6ab04c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0">
+  <div class="card-header" style="background:#6ab04c">
+    <span class="landlord-name">Sveafastigheter</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Korpralsvägen 40 A | 31.5 m² | 5282 kr / mån</p>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/korpralsvagen-40-a" target="_blank" class="link-btn" style="--accent:#6ab04c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0">
+  <div class="card-header" style="background:#6ab04c">
+    <span class="landlord-name">Sveafastigheter</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Korpralsvägen 40 B | 26.2 m² | 3494 kr / mån</p>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/korpralsvagen-40-b" target="_blank" class="link-btn" style="--accent:#6ab04c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0">
+  <div class="card-header" style="background:#6ab04c">
+    <span class="landlord-name">Sveafastigheter</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Korsgatan 3 B | 50 m² | 7748 kr / mån</p>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/korsgatan-3-b" target="_blank" class="link-btn" style="--accent:#6ab04c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0">
+  <div class="card-header" style="background:#6ab04c">
+    <span class="landlord-name">Sveafastigheter</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Moritzvägen 11 | 18 m² | 5505 kr / mån</p>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/moritzvagen-11" target="_blank" class="link-btn" style="--accent:#6ab04c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0">
+  <div class="card-header" style="background:#6ab04c">
+    <span class="landlord-name">Sveafastigheter</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Sofiehemsvägen 77 | 32 m² | 5948 kr / mån</p>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/sofiehemsvagen-77" target="_blank" class="link-btn" style="--accent:#6ab04c">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0">
+  <div class="card-header" style="background:#6ab04c">
+    <span class="landlord-name">Sveafastigheter</span>
+    
+  </div>
+  <div class="card-body">
+    <p class="listing-text">Tvistevägen 43 | 25.2 m² | 6096 kr / mån</p>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/tvistevagen-43" target="_blank" class="link-btn" style="--accent:#6ab04c">Visa annons →</a>
+  </div>
+</div>
+
+  <div class="empty-state" id="empty" hidden>Inga lägenheter matchar filtret.</div>
+</div>
+
+<script>
+  let currentLandlord = 'all';
+
+  function filterLandlord(landlord, btn) {
+    currentLandlord = landlord;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const onlyNew = document.getElementById('only-new').checked;
+    const cards = document.querySelectorAll('.card');
+    let visible = 0;
+    cards.forEach(card => {
+      const matchLandlord = currentLandlord === 'all' || card.dataset.landlord === currentLandlord;
+      const matchNew = !onlyNew || card.dataset.new === '1';
+      const show = matchLandlord && matchNew;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    document.getElementById('visible-count').textContent = visible;
+    document.getElementById('empty').hidden = visible > 0;
+  }
+
+  // Registrera service worker (gör appen installerbar + offline)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(err =>
+        console.warn('Service worker kunde inte registreras:', err)
+      );
+    });
+  }
+</script>
+
+</body>
+</html>
