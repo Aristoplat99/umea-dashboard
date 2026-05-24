@@ -226,11 +226,12 @@ def build_html(listings):
         new_badge = '<span class="badge-new">NY</span>' if l['is_new'] else ''
         new_class = ' is-new' if l['is_new'] else ''
         rent_attr = l['rent'] if l['rent'] is not None else 99999999
+        size_attr = l['size'] if l['size'] is not None else 0
         address = _esc(l['address']) or '(okänd adress)'
         meta = _esc(_format_meta(l['rooms'], l['size'], l['move_in']))
         meta_html = f'<div class="meta">{meta}</div>' if meta else ''
         cards_html += f'''
-<div class="card{new_class}" data-landlord="{_esc(l['landlord'])}" data-new="{'1' if l['is_new'] else '0'}" data-rent="{rent_attr}">
+<div class="card{new_class}" data-landlord="{_esc(l['landlord'])}" data-new="{'1' if l['is_new'] else '0'}" data-rent="{rent_attr}" data-size="{size_attr}">
   <div class="card-top">
     <h3 class="address">{address}</h3>
     {new_badge}
@@ -476,14 +477,22 @@ def build_html(listings):
     {filter_buttons}
   </div>
   <div class="filter-group">
-    <span class="filter-label">Hyra & sort</span>
+    <span class="filter-label">Hyra & yta</span>
     <span>Max</span>
     <input id="max-rent" class="filter-input" type="number" min="0" step="500" placeholder="ingen gräns" oninput="applyFilters()">
     <span>kr</span>
+    <span style="margin-left:0.4rem">Min</span>
+    <input id="min-size" class="filter-input" type="number" min="0" step="5" placeholder="ingen gräns" oninput="applyFilters()">
+    <span>m²</span>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Sortering</span>
     <select id="sort" class="filter-input" onchange="applyFilters()">
-      <option value="default">Sortering: standard</option>
+      <option value="default">Standard</option>
       <option value="rent-asc">Hyra (lägst först)</option>
       <option value="rent-desc">Hyra (högst först)</option>
+      <option value="size-desc">Yta (störst först)</option>
+      <option value="size-asc">Yta (minst först)</option>
     </select>
   </div>
 </div>
@@ -513,6 +522,7 @@ def build_html(listings):
 
   function applyFilters() {{
     const maxRent = parseInt(document.getElementById('max-rent').value, 10);
+    const minSize = parseFloat(document.getElementById('min-size').value);
     const sort = document.getElementById('sort').value;
     const grid = document.getElementById('grid');
     const cards = Array.from(grid.querySelectorAll('.card'));
@@ -522,8 +532,10 @@ def build_html(listings):
       const matchLandlord = currentLandlord === 'all' || card.dataset.landlord === currentLandlord;
       const matchNew = currentStatus === 'all' || card.dataset.new === '1';
       const rent = parseInt(card.dataset.rent, 10);
+      const size = parseFloat(card.dataset.size);
       const matchRent = isNaN(maxRent) || rent <= maxRent;
-      const show = matchLandlord && matchNew && matchRent;
+      const matchSize = isNaN(minSize) || size >= minSize;
+      const show = matchLandlord && matchNew && matchRent && matchSize;
       card.hidden = !show;
       if (show) visible++;
     }});
@@ -531,11 +543,11 @@ def build_html(listings):
     // Sortering: flytta om DOM-noderna
     if (sort !== 'default') {{
       const sorted = cards.slice().sort((a, b) => {{
-        const ra = parseInt(a.dataset.rent, 10);
-        const rb = parseInt(b.dataset.rent, 10);
-        return sort === 'rent-asc' ? ra - rb : rb - ra;
+        const key = sort.startsWith('rent') ? 'rent' : 'size';
+        const va = parseFloat(a.dataset[key]);
+        const vb = parseFloat(b.dataset[key]);
+        return sort.endsWith('-asc') ? va - vb : vb - va;
       }});
-      // Spara empty-state-elementet och flytta korten
       const empty = document.getElementById('empty');
       sorted.forEach(c => grid.appendChild(c));
       grid.appendChild(empty);

@@ -216,7 +216,7 @@
     <span><strong id="visible-count">47</strong> visas</span>
     <span class="new-pill"><strong>47</strong> nya sedan igår</span>
   </div>
-  <span class="updated">Uppdaterad 2026-05-24 23:23</span>
+  <span class="updated">Uppdaterad 2026-05-24 23:26</span>
 </header>
 
 <div class="controls">
@@ -241,21 +241,29 @@
 
   </div>
   <div class="filter-group">
-    <span class="filter-label">Hyra & sort</span>
+    <span class="filter-label">Hyra & yta</span>
     <span>Max</span>
     <input id="max-rent" class="filter-input" type="number" min="0" step="500" placeholder="ingen gräns" oninput="applyFilters()">
     <span>kr</span>
+    <span style="margin-left:0.4rem">Min</span>
+    <input id="min-size" class="filter-input" type="number" min="0" step="5" placeholder="ingen gräns" oninput="applyFilters()">
+    <span>m²</span>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Sortering</span>
     <select id="sort" class="filter-input" onchange="applyFilters()">
-      <option value="default">Sortering: standard</option>
+      <option value="default">Standard</option>
       <option value="rent-asc">Hyra (lägst först)</option>
       <option value="rent-desc">Hyra (högst först)</option>
+      <option value="size-desc">Yta (störst först)</option>
+      <option value="size-asc">Yta (minst först)</option>
     </select>
   </div>
 </div>
 
 <div class="grid" id="grid">
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="5519">
+<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="5519" data-size="54.0">
   <div class="card-top">
     <h3 class="address">Fysikgränd 41</h3>
     <span class="badge-new">NY</span>
@@ -268,7 +276,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4956">
+<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4956" data-size="36.0">
   <div class="card-top">
     <h3 class="address">Gluntens Väg 9</h3>
     <span class="badge-new">NY</span>
@@ -281,7 +289,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="7060">
+<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="7060" data-size="68.0">
   <div class="card-top">
     <h3 class="address">Historiegränd 20 A</h3>
     <span class="badge-new">NY</span>
@@ -294,7 +302,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4669">
+<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4669" data-size="20.0">
   <div class="card-top">
     <h3 class="address">Pedagoggränd 1 D</h3>
     <span class="badge-new">NY</span>
@@ -307,7 +315,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4685">
+<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4685" data-size="20.0">
   <div class="card-top">
     <h3 class="address">Pedagoggränd 1 D</h3>
     <span class="badge-new">NY</span>
@@ -320,7 +328,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="5990">
+<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="5990" data-size="44.0">
   <div class="card-top">
     <h3 class="address">Pedagoggränd 3 C</h3>
     <span class="badge-new">NY</span>
@@ -333,7 +341,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="5253">
+<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="5253" data-size="43.0">
   <div class="card-top">
     <h3 class="address">Rullstensgatan 112</h3>
     <span class="badge-new">NY</span>
@@ -346,7 +354,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="4219">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="4219" data-size="22.0">
   <div class="card-top">
     <h3 class="address">Sofiehemsvägen 76B</h3>
     <span class="badge-new">NY</span>
@@ -359,7 +367,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="7819">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="7819" data-size="31.0">
   <div class="card-top">
     <h3 class="address">Lagmansgatan 33B</h3>
     <span class="badge-new">NY</span>
@@ -372,7 +380,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="10159">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="10159" data-size="53.7">
   <div class="card-top">
     <h3 class="address">Kungsgårdsvägen 63</h3>
     <span class="badge-new">NY</span>
@@ -385,7 +393,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="9401">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="9401" data-size="44.3">
   <div class="card-top">
     <h3 class="address">Lagmansgatan 33B</h3>
     <span class="badge-new">NY</span>
@@ -398,7 +406,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="11228">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="11228" data-size="59.4">
   <div class="card-top">
     <h3 class="address">Kungsgårdsvägen 63</h3>
     <span class="badge-new">NY</span>
@@ -411,7 +419,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="10244">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="10244" data-size="53.5">
   <div class="card-top">
     <h3 class="address">Kungsgårdsvägen 63</h3>
     <span class="badge-new">NY</span>
@@ -424,7 +432,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="7962">
+<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="7962" data-size="46.0">
   <div class="card-top">
     <h3 class="address">Gnejsvägen 6 B</h3>
     <span class="badge-new">NY</span>
@@ -437,7 +445,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="9221">
+<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="9221" data-size="65.0">
   <div class="card-top">
     <h3 class="address">Gnejsvägen 7</h3>
     <span class="badge-new">NY</span>
@@ -450,7 +458,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="8317">
+<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="8317" data-size="48.0">
   <div class="card-top">
     <h3 class="address">Gnejsvägen 8 B</h3>
     <span class="badge-new">NY</span>
@@ -463,7 +471,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="9636">
+<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="9636" data-size="48.0">
   <div class="card-top">
     <h3 class="address">Kvartsvägen 3 B</h3>
     <span class="badge-new">NY</span>
@@ -476,7 +484,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="HSB" data-new="1" data-rent="4960">
+<div class="card is-new" data-landlord="HSB" data-new="1" data-rent="4960" data-size="37.2">
   <div class="card-top">
     <h3 class="address">Filgränd 65 A, Östra Ersboda</h3>
     <span class="badge-new">NY</span>
@@ -489,7 +497,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="HSB" data-new="1" data-rent="4873">
+<div class="card is-new" data-landlord="HSB" data-new="1" data-rent="4873" data-size="37.2">
   <div class="card-top">
     <h3 class="address">Filgränd 75 A, Östra Ersboda</h3>
     <span class="badge-new">NY</span>
@@ -502,7 +510,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999">
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="40.0">
   <div class="card-top">
     <h3 class="address">Kålhagsvägen 21B</h3>
     <span class="badge-new">NY</span>
@@ -515,7 +523,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999">
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="56.0">
   <div class="card-top">
     <h3 class="address">Sjöråvägen 16</h3>
     <span class="badge-new">NY</span>
@@ -528,7 +536,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999">
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="55.0">
   <div class="card-top">
     <h3 class="address">Sjöråvägen 18</h3>
     <span class="badge-new">NY</span>
@@ -541,7 +549,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999">
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="56.0">
   <div class="card-top">
     <h3 class="address">Sjöråvägen 20</h3>
     <span class="badge-new">NY</span>
@@ -554,7 +562,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999">
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="56.0">
   <div class="card-top">
     <h3 class="address">Sjöråvägen 26</h3>
     <span class="badge-new">NY</span>
@@ -567,7 +575,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999">
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="55.0">
   <div class="card-top">
     <h3 class="address">Sjöråvägen 30</h3>
     <span class="badge-new">NY</span>
@@ -580,7 +588,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lerstenen" data-new="1" data-rent="14547">
+<div class="card is-new" data-landlord="Lerstenen" data-new="1" data-rent="14547" data-size="92.6">
   <div class="card-top">
     <h3 class="address">Lagmansgatan 6 B</h3>
     <span class="badge-new">NY</span>
@@ -593,7 +601,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lerstenen" data-new="1" data-rent="9013">
+<div class="card is-new" data-landlord="Lerstenen" data-new="1" data-rent="9013" data-size="51.8">
   <div class="card-top">
     <h3 class="address">Lyktvägen 8</h3>
     <span class="badge-new">NY</span>
@@ -606,7 +614,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Mofab" data-new="1" data-rent="99999999">
+<div class="card is-new" data-landlord="Mofab" data-new="1" data-rent="99999999" data-size="153.0">
   <div class="card-top">
     <h3 class="address">V. Norrlandsgatan 29</h3>
     <span class="badge-new">NY</span>
@@ -619,7 +627,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Riksbyggen" data-new="1" data-rent="7864">
+<div class="card is-new" data-landlord="Riksbyggen" data-new="1" data-rent="7864" data-size="48.0">
   <div class="card-top">
     <h3 class="address">Istidsgatan 11A</h3>
     <span class="badge-new">NY</span>
@@ -632,7 +640,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="11229">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="11229" data-size="87.0">
   <div class="card-top">
     <h3 class="address">Mariehem Mariehemsvägen 35 A</h3>
     <span class="badge-new">NY</span>
@@ -645,7 +653,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="12879">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="12879" data-size="105.0">
   <div class="card-top">
     <h3 class="address">Mariehem Mariehemsvägen 39 E</h3>
     <span class="badge-new">NY</span>
@@ -658,7 +666,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="5773">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="5773" data-size="47.0">
   <div class="card-top">
     <h3 class="address">Mariehem Mariehemsvägen 41 N</h3>
     <span class="badge-new">NY</span>
@@ -671,7 +679,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="11305">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="11305" data-size="78.0">
   <div class="card-top">
     <h3 class="address">Mariehem Morkullevägen 18 C</h3>
     <span class="badge-new">NY</span>
@@ -684,7 +692,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="11305">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="11305" data-size="78.0">
   <div class="card-top">
     <h3 class="address">Mariehem Morkullevägen 18 J</h3>
     <span class="badge-new">NY</span>
@@ -697,7 +705,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="8022">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="8022" data-size="50.0">
   <div class="card-top">
     <h3 class="address">Mariehem Morkullevägen 20 A</h3>
     <span class="badge-new">NY</span>
@@ -710,7 +718,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="7109">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="7109" data-size="40.0">
   <div class="card-top">
     <h3 class="address">Mariehem Morkullevägen 20 B</h3>
     <span class="badge-new">NY</span>
@@ -723,7 +731,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="3770">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="3770" data-size="18.0">
   <div class="card-top">
     <h3 class="address">Teg Länsmansvägen 4</h3>
     <span class="badge-new">NY</span>
@@ -736,7 +744,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="16536">
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="16536" data-size="112.0">
   <div class="card-top">
     <h3 class="address">Teg Länsmansvägen 4</h3>
     <span class="badge-new">NY</span>
@@ -749,7 +757,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="8415">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="8415" data-size="70.8">
   <div class="card-top">
     <h3 class="address">Filgränd 25</h3>
     <span class="badge-new">NY</span>
@@ -762,7 +770,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="6555">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="6555" data-size="31.0">
   <div class="card-top">
     <h3 class="address">Gärdesvägen 4</h3>
     <span class="badge-new">NY</span>
@@ -775,7 +783,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="5282">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="5282" data-size="31.5">
   <div class="card-top">
     <h3 class="address">Korpralsvägen 40 A</h3>
     <span class="badge-new">NY</span>
@@ -788,7 +796,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="3494">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="3494" data-size="26.2">
   <div class="card-top">
     <h3 class="address">Korpralsvägen 40 B</h3>
     <span class="badge-new">NY</span>
@@ -801,7 +809,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="7748">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="7748" data-size="50.0">
   <div class="card-top">
     <h3 class="address">Korsgatan 3 B</h3>
     <span class="badge-new">NY</span>
@@ -814,7 +822,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="5505">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="5505" data-size="18.0">
   <div class="card-top">
     <h3 class="address">Moritzvägen 11</h3>
     <span class="badge-new">NY</span>
@@ -827,7 +835,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="5948">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="5948" data-size="32.0">
   <div class="card-top">
     <h3 class="address">Sofiehemsvägen 77</h3>
     <span class="badge-new">NY</span>
@@ -840,7 +848,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="6096">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="6096" data-size="25.0">
   <div class="card-top">
     <h3 class="address">Tvistevägen 43</h3>
     <span class="badge-new">NY</span>
@@ -853,7 +861,7 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="6096">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="6096" data-size="25.2">
   <div class="card-top">
     <h3 class="address">Tvistevägen 43</h3>
     <span class="badge-new">NY</span>
@@ -889,6 +897,7 @@
 
   function applyFilters() {
     const maxRent = parseInt(document.getElementById('max-rent').value, 10);
+    const minSize = parseFloat(document.getElementById('min-size').value);
     const sort = document.getElementById('sort').value;
     const grid = document.getElementById('grid');
     const cards = Array.from(grid.querySelectorAll('.card'));
@@ -898,8 +907,10 @@
       const matchLandlord = currentLandlord === 'all' || card.dataset.landlord === currentLandlord;
       const matchNew = currentStatus === 'all' || card.dataset.new === '1';
       const rent = parseInt(card.dataset.rent, 10);
+      const size = parseFloat(card.dataset.size);
       const matchRent = isNaN(maxRent) || rent <= maxRent;
-      const show = matchLandlord && matchNew && matchRent;
+      const matchSize = isNaN(minSize) || size >= minSize;
+      const show = matchLandlord && matchNew && matchRent && matchSize;
       card.hidden = !show;
       if (show) visible++;
     });
@@ -907,11 +918,11 @@
     // Sortering: flytta om DOM-noderna
     if (sort !== 'default') {
       const sorted = cards.slice().sort((a, b) => {
-        const ra = parseInt(a.dataset.rent, 10);
-        const rb = parseInt(b.dataset.rent, 10);
-        return sort === 'rent-asc' ? ra - rb : rb - ra;
+        const key = sort.startsWith('rent') ? 'rent' : 'size';
+        const va = parseFloat(a.dataset[key]);
+        const vb = parseFloat(b.dataset[key]);
+        return sort.endsWith('-asc') ? va - vb : vb - va;
       });
-      // Spara empty-state-elementet och flytta korten
       const empty = document.getElementById('empty');
       sorted.forEach(c => grid.appendChild(c));
       grid.appendChild(empty);
