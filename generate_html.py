@@ -346,6 +346,52 @@ def build_html(listings):
   .filter-input:focus {{ outline: none; border-color: #1a1a2e; }}
   select.filter-input {{ width: auto; cursor: pointer; }}
 
+  /* Slidrar (range inputs) */
+  .slider-row {{ gap: 0.8rem; }}
+  .slider {{
+    flex: 1;
+    min-width: 160px;
+    max-width: 320px;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #e5e5ea;
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+  }}
+  .slider::-webkit-slider-thumb {{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #1a1a2e;
+    cursor: grab;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: transform 0.1s;
+  }}
+  .slider::-webkit-slider-thumb:active {{ cursor: grabbing; transform: scale(1.15); }}
+  .slider::-moz-range-thumb {{
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1a1a2e;
+    cursor: grab;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }}
+  .slider-value {{
+    font-size: 0.84rem;
+    color: #1c1c1e;
+    font-weight: 600;
+    min-width: 90px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }}
+  .slider-value.is-default {{ color: #8e8e93; font-weight: 500; }}
+
   .grid {{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -476,14 +522,15 @@ def build_html(listings):
     <span class="filter-label">Hyresvärd</span>
     {filter_buttons}
   </div>
-  <div class="filter-group">
-    <span class="filter-label">Hyra & yta</span>
-    <span>Max</span>
-    <input id="max-rent" class="filter-input" type="number" min="0" step="500" placeholder="ingen gräns" oninput="applyFilters()">
-    <span>kr</span>
-    <span style="margin-left:0.4rem">Min</span>
-    <input id="min-size" class="filter-input" type="number" min="0" step="5" placeholder="ingen gräns" oninput="applyFilters()">
-    <span>m²</span>
+  <div class="filter-group slider-row">
+    <span class="filter-label">Max hyra</span>
+    <input id="max-rent" type="range" class="slider" min="2000" max="25000" step="500" value="25000" oninput="applyFilters()">
+    <span id="rent-value" class="slider-value is-default">Ingen gräns</span>
+  </div>
+  <div class="filter-group slider-row">
+    <span class="filter-label">Min yta</span>
+    <input id="min-size" type="range" class="slider" min="0" max="150" step="5" value="0" oninput="applyFilters()">
+    <span id="size-value" class="slider-value is-default">Ingen gräns</span>
   </div>
   <div class="filter-group">
     <span class="filter-label">Sortering</span>
@@ -520,9 +567,26 @@ def build_html(listings):
     applyFilters();
   }}
 
+  function formatKr(n) {{
+    return n.toString().replace(/\\B(?=(\\d{{3}})+(?!\\d))/g, ' ') + ' kr';
+  }}
+
   function applyFilters() {{
-    const maxRent = parseInt(document.getElementById('max-rent').value, 10);
-    const minSize = parseFloat(document.getElementById('min-size').value);
+    const rentSlider = document.getElementById('max-rent');
+    const sizeSlider = document.getElementById('min-size');
+    const maxRent = parseInt(rentSlider.value, 10);
+    const minSize = parseFloat(sizeSlider.value);
+    const rentAtMax = maxRent >= parseInt(rentSlider.max, 10);  // = "ingen gräns"
+    const sizeAtMin = minSize <= parseFloat(sizeSlider.min);    // = "ingen gräns"
+
+    // Uppdatera slider-etiketter
+    const rentLabel = document.getElementById('rent-value');
+    const sizeLabel = document.getElementById('size-value');
+    rentLabel.textContent = rentAtMax ? 'Ingen gräns' : 'Max ' + formatKr(maxRent);
+    rentLabel.classList.toggle('is-default', rentAtMax);
+    sizeLabel.textContent = sizeAtMin ? 'Ingen gräns' : 'Från ' + minSize + ' m²';
+    sizeLabel.classList.toggle('is-default', sizeAtMin);
+
     const sort = document.getElementById('sort').value;
     const grid = document.getElementById('grid');
     const cards = Array.from(grid.querySelectorAll('.card'));
@@ -533,8 +597,8 @@ def build_html(listings):
       const matchNew = currentStatus === 'all' || card.dataset.new === '1';
       const rent = parseInt(card.dataset.rent, 10);
       const size = parseFloat(card.dataset.size);
-      const matchRent = isNaN(maxRent) || rent <= maxRent;
-      const matchSize = isNaN(minSize) || size >= minSize;
+      const matchRent = rentAtMax || rent <= maxRent;
+      const matchSize = sizeAtMin || size >= minSize;
       const show = matchLandlord && matchNew && matchRent && matchSize;
       card.hidden = !show;
       if (show) visible++;
