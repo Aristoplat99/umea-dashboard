@@ -83,6 +83,10 @@ def load_listings():
         except Exception:
             continue
         for line in lines:
+            # Hoppa över "tomt-vakt"-rader som scrapers skriver när
+            # hyresvärden inte har några lediga lägenheter just nu.
+            if '| Inga lediga' in line:
+                continue
             landlord = extract_landlord(line)
             link = extract_link(line) or LANDLORD_FALLBACK_URLS.get(landlord, '#')
             is_new = line not in yesterday
@@ -101,11 +105,12 @@ def build_html(listings):
     new_count = sum(1 for l in listings if l['is_new'])
     landlords = sorted(set(l['landlord'] for l in listings))
 
-    # Build landlord filter buttons
+    # Build landlord filter buttons (visar bara hyresvärdar som faktiskt har lägenheter)
     filter_buttons = '<button class="filter-btn active" onclick="filterLandlord(\'all\', this)">Alla</button>\n'
     for ll in landlords:
         color = LANDLORD_COLORS.get(ll, '#888')
-        filter_buttons += f'<button class="filter-btn" style="--accent:{color}" onclick="filterLandlord(\'{ll}\', this)">{ll}</button>\n'
+        count = sum(1 for x in listings if x['landlord'] == ll)
+        filter_buttons += f'<button class="filter-btn" style="--accent:{color}" onclick="filterLandlord(\'{ll}\', this)">{ll} ({count})</button>\n'
 
     # Build cards
     cards_html = ''
@@ -173,9 +178,41 @@ def build_html(listings):
     border-bottom: 1px solid #e0e0e0;
     padding: 1rem 2rem;
     display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }}
+  .filter-group {{
+    display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: 0.5rem;
+  }}
+  .filter-label {{
+    font-size: 0.82rem;
+    color: #555;
+    font-weight: 600;
+    min-width: 80px;
+  }}
+  .status-btn {{
+    border: 2px solid transparent;
+    background: #f0f2f5;
+    color: #444;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 600;
+  }}
+  .status-btn:hover {{ background: #e2e4e8; }}
+  .status-btn.active {{
+    background: #1a1a2e;
+    color: #fff;
+    border-color: #1a1a2e;
+  }}
+  .status-btn.status-new.active {{
+    background: #e74c3c;
+    border-color: #e74c3c;
   }}
   .filter-btn {{
     border: 2px solid transparent;
@@ -196,17 +233,6 @@ def build_html(listings):
     color: #fff;
     border-color: var(--accent, #1a1a2e);
   }}
-  .toggle-new {{
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: #555;
-    cursor: pointer;
-  }}
-  .toggle-new input {{ cursor: pointer; accent-color: #e74c3c; width: 1rem; height: 1rem; }}
-
   .grid {{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -292,11 +318,15 @@ def build_html(listings):
 </header>
 
 <div class="controls">
-  {filter_buttons}
-  <label class="toggle-new">
-    <input type="checkbox" id="only-new" onchange="applyFilters()">
-    Visa bara nya
-  </label>
+  <div class="filter-group">
+    <span class="filter-label">Visa:</span>
+    <button class="status-btn active" onclick="filterStatus('all', this)">Alla ({total})</button>
+    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya ({new_count})</button>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Hyresvärd:</span>
+    {filter_buttons}
+  </div>
 </div>
 
 <div class="grid" id="grid">
@@ -306,6 +336,7 @@ def build_html(listings):
 
 <script>
   let currentLandlord = 'all';
+  let currentStatus = 'all';
 
   function filterLandlord(landlord, btn) {{
     currentLandlord = landlord;
@@ -314,13 +345,19 @@ def build_html(listings):
     applyFilters();
   }}
 
+  function filterStatus(status, btn) {{
+    currentStatus = status;
+    document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  }}
+
   function applyFilters() {{
-    const onlyNew = document.getElementById('only-new').checked;
     const cards = document.querySelectorAll('.card');
     let visible = 0;
     cards.forEach(card => {{
       const matchLandlord = currentLandlord === 'all' || card.dataset.landlord === currentLandlord;
-      const matchNew = !onlyNew || card.dataset.new === '1';
+      const matchNew = currentStatus === 'all' || card.dataset.new === '1';
       const show = matchLandlord && matchNew;
       card.hidden = !show;
       if (show) visible++;

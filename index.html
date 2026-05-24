@@ -44,9 +44,41 @@
     border-bottom: 1px solid #e0e0e0;
     padding: 1rem 2rem;
     display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .filter-group {
+    display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: 0.5rem;
+  }
+  .filter-label {
+    font-size: 0.82rem;
+    color: #555;
+    font-weight: 600;
+    min-width: 80px;
+  }
+  .status-btn {
+    border: 2px solid transparent;
+    background: #f0f2f5;
+    color: #444;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 600;
+  }
+  .status-btn:hover { background: #e2e4e8; }
+  .status-btn.active {
+    background: #1a1a2e;
+    color: #fff;
+    border-color: #1a1a2e;
+  }
+  .status-btn.status-new.active {
+    background: #e74c3c;
+    border-color: #e74c3c;
   }
   .filter-btn {
     border: 2px solid transparent;
@@ -67,17 +99,6 @@
     color: #fff;
     border-color: var(--accent, #1a1a2e);
   }
-  .toggle-new {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: #555;
-    cursor: pointer;
-  }
-  .toggle-new input { cursor: pointer; accent-color: #e74c3c; width: 1rem; height: 1rem; }
-
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -155,46 +176,37 @@
 <header>
   <h1>Umeå Bostadsdashboard</h1>
   <div class="stats">
-    <span><strong>49</strong> lägenheter</span>
-    <span><strong id="visible-count">49</strong> visas</span>
-    <span><strong style="color:#ff6b6b">49</strong> nya sedan igår</span>
+    <span><strong>47</strong> lägenheter</span>
+    <span><strong id="visible-count">47</strong> visas</span>
+    <span><strong style="color:#ff6b6b">47</strong> nya sedan igår</span>
   </div>
-  <span class="updated">Uppdaterad 2026-05-24 20:58</span>
+  <span class="updated">Uppdaterad 2026-05-24 23:12</span>
 </header>
 
 <div class="controls">
-  <button class="filter-btn active" onclick="filterLandlord('all', this)">Alla</button>
-<button class="filter-btn" style="--accent:#8e44ad" onclick="filterLandlord('Balticgruppen', this)">Balticgruppen</button>
-<button class="filter-btn" style="--accent:#e07b39" onclick="filterLandlord('Bostaden', this)">Bostaden</button>
-<button class="filter-btn" style="--accent:#4f86c6" onclick="filterLandlord('Buref', this)">Buref</button>
-<button class="filter-btn" style="--accent:#d35400" onclick="filterLandlord('Grannstaden', this)">Grannstaden</button>
-<button class="filter-btn" style="--accent:#f39c12" onclick="filterLandlord('HSB', this)">HSB</button>
-<button class="filter-btn" style="--accent:#2980b9" onclick="filterLandlord('Heimstaden', this)">Heimstaden</button>
-<button class="filter-btn" style="--accent:#16a085" onclick="filterLandlord('Lansa', this)">Lansa</button>
-<button class="filter-btn" style="--accent:#9b59b6" onclick="filterLandlord('Lerstenen', this)">Lerstenen</button>
-<button class="filter-btn" style="--accent:#27ae60" onclick="filterLandlord('Mofab', this)">Mofab</button>
-<button class="filter-btn" style="--accent:#e74c3c" onclick="filterLandlord('Riksbyggen', this)">Riksbyggen</button>
-<button class="filter-btn" style="--accent:#1abc9c" onclick="filterLandlord('Rikshem', this)">Rikshem</button>
-<button class="filter-btn" style="--accent:#6ab04c" onclick="filterLandlord('Sveafastigheter', this)">Sveafastigheter</button>
+  <div class="filter-group">
+    <span class="filter-label">Visa:</span>
+    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (47)</button>
+    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (47)</button>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Hyresvärd:</span>
+    <button class="filter-btn active" onclick="filterLandlord('all', this)">Alla</button>
+<button class="filter-btn" style="--accent:#e07b39" onclick="filterLandlord('Bostaden', this)">Bostaden (7)</button>
+<button class="filter-btn" style="--accent:#4f86c6" onclick="filterLandlord('Buref', this)">Buref (6)</button>
+<button class="filter-btn" style="--accent:#f39c12" onclick="filterLandlord('HSB', this)">HSB (2)</button>
+<button class="filter-btn" style="--accent:#2980b9" onclick="filterLandlord('Heimstaden', this)">Heimstaden (4)</button>
+<button class="filter-btn" style="--accent:#16a085" onclick="filterLandlord('Lansa', this)">Lansa (6)</button>
+<button class="filter-btn" style="--accent:#9b59b6" onclick="filterLandlord('Lerstenen', this)">Lerstenen (2)</button>
+<button class="filter-btn" style="--accent:#27ae60" onclick="filterLandlord('Mofab', this)">Mofab (1)</button>
+<button class="filter-btn" style="--accent:#e74c3c" onclick="filterLandlord('Riksbyggen', this)">Riksbyggen (1)</button>
+<button class="filter-btn" style="--accent:#1abc9c" onclick="filterLandlord('Rikshem', this)">Rikshem (9)</button>
+<button class="filter-btn" style="--accent:#6ab04c" onclick="filterLandlord('Sveafastigheter', this)">Sveafastigheter (9)</button>
 
-  <label class="toggle-new">
-    <input type="checkbox" id="only-new" onchange="applyFilters()">
-    Visa bara nya
-  </label>
+  </div>
 </div>
 
 <div class="grid" id="grid">
-
-<div class="card" data-landlord="Balticgruppen" data-new="1">
-  <div class="card-header" style="background:#8e44ad">
-    <span class="landlord-name">Balticgruppen</span>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="card-body">
-    <p class="listing-text">Inga lediga lagenheter just nu</p>
-    <a href="https://balticgruppen.se/" target="_blank" class="link-btn" style="--accent:#8e44ad">Visa annons →</a>
-  </div>
-</div>
 
 <div class="card" data-landlord="Bostaden" data-new="1">
   <div class="card-header" style="background:#e07b39">
@@ -336,17 +348,6 @@
   <div class="card-body">
     <p class="listing-text">Lgh 1403, Kungsgårdsvägen 63: 2 Rok, våning 4tr,  53,5kvm, 10.244kr/månad         Ledig för omgående inflytt</p>
     <a href="https://buref.se/lediga-lagenheter/" target="_blank" class="link-btn" style="--accent:#4f86c6">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card" data-landlord="Grannstaden" data-new="1">
-  <div class="card-header" style="background:#d35400">
-    <span class="landlord-name">Grannstaden</span>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="card-body">
-    <p class="listing-text">Inga lediga lagenheter just nu</p>
-    <a href="https://grannstaden.se/" target="_blank" class="link-btn" style="--accent:#d35400">Visa annons →</a>
   </div>
 </div>
 
@@ -729,6 +730,7 @@
 
 <script>
   let currentLandlord = 'all';
+  let currentStatus = 'all';
 
   function filterLandlord(landlord, btn) {
     currentLandlord = landlord;
@@ -737,13 +739,19 @@
     applyFilters();
   }
 
+  function filterStatus(status, btn) {
+    currentStatus = status;
+    document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  }
+
   function applyFilters() {
-    const onlyNew = document.getElementById('only-new').checked;
     const cards = document.querySelectorAll('.card');
     let visible = 0;
     cards.forEach(card => {
       const matchLandlord = currentLandlord === 'all' || card.dataset.landlord === currentLandlord;
-      const matchNew = !onlyNew || card.dataset.new === '1';
+      const matchNew = currentStatus === 'all' || card.dataset.new === '1';
       const show = matchLandlord && matchNew;
       card.hidden = !show;
       if (show) visible++;
