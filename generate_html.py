@@ -24,42 +24,128 @@ LANDLORD_FALLBACK_URLS = {
     'Mofab':           'https://mofab.se/',
 }
 
-LANDLORD_COLORS = {
-    'Buref':           '#4f86c6',
-    'Bostaden':        '#e07b39',
-    'Sveafastigheter': '#6ab04c',
-    'Lerstenen':       '#9b59b6',
-    'Riksbyggen':      '#e74c3c',
-    'Rikshem':         '#1abc9c',
-    'HSB':             '#f39c12',
-    'Heimstaden':      '#2980b9',
-    'Lansa':           '#16a085',
-    'Balticgruppen':   '#8e44ad',
-    'Grannstaden':     '#d35400',
-    'Mofab':           '#27ae60',
-}
 
-def strip_emoji(text):
+# ---------- Parsning av lägenhetsrader ----------
+
+def _strip_emoji(text):
     return re.sub(r'[\U00010000-\U0010ffff☀-➿︀-️]+\s*', '', text).strip()
 
+def _strip_link(text):
+    text = re.sub(r'\s*\(Länk:\s*https?://[^\)]+\)', '', text)
+    text = re.sub(r'\s*Länk:\s*https?://\S+', '', text)
+    return text
+
 def extract_link(line):
-    m = re.search(r'\(Länk: (https?://[^\)]+)\)', line)
-    if m:
-        return m.group(1).strip()
-    m = re.search(r'Länk: (https?://\S+)', line)
-    if m:
-        return m.group(1).strip()
+    m = re.search(r'\(Länk:\s*(https?://[^\)]+)\)', line)
+    if m: return m.group(1).strip()
+    m = re.search(r'Länk:\s*(https?://\S+)', line)
+    if m: return m.group(1).strip()
     return None
 
 def extract_landlord(line):
-    return strip_emoji(line).split(' | ')[0].strip()
+    return _strip_emoji(line).split(' | ')[0].strip()
 
-def get_display_text(line, landlord):
-    text = re.sub(r'\s*\(Länk: https?://[^\)]+\)', '', line)
-    text = re.sub(r'\s*Länk: https?://\S+', '', text)
-    text = strip_emoji(text)
-    parts = text.split(' | ', 1)
-    return parts[1].strip() if len(parts) > 1 else text
+def extract_rent(text):
+    """Hyra i kr/mån som int, eller None."""
+    m = re.search(r'(\d[\d\s.]*?)\s*kr\b', text)
+    if not m: return None
+    digits = re.sub(r'\D', '', m.group(1))
+    if not digits: return None
+    try:
+        v = int(digits)
+        # Sanity: hyror brukar ligga mellan 1000-50000
+        return v if 500 <= v <= 100000 else None
+    except ValueError:
+        return None
+
+def extract_size(text):
+    """Storlek i m² som float, eller None."""
+    m = re.search(r'(\d+(?:[.,]\d+)?)\s*(?:kvm|m²|m2)\b', text, re.IGNORECASE)
+    if not m: return None
+    try:
+        return float(m.group(1).replace(',', '.'))
+    except ValueError:
+        return None
+
+def extract_rooms(text):
+    """Antal rum som int, eller None."""
+    m = re.search(r'\b(\d+)\s*(?:rok|rkv|roka|rum|r o k)\b', text, re.IGNORECASE)
+    return int(m.group(1)) if m else None
+
+def extract_move_in(text):
+    """Inflyttningsdatum som ISO-string, eller None."""
+    m = re.search(r'\b(\d{4}-\d{2}-\d{2})\b', text)
+    return m.group(1) if m else None
+
+def extract_address(line, landlord):
+    """Heuristisk adress-extraktion per hyresvärd. Fallback: första |-fältet."""
+    text = _strip_emoji(_strip_link(line))
+    parts = [p.strip() for p in text.split(' | ') if p.strip()]
+    if len(parts) < 2:
+        return text
+    candidates = parts[1:]  # hoppa över hyresvärds-prefix
+
+    # Buref: "Lgh 02:17, Sofiehemsvägen 76B: 1 Rkv, ..."
+    if landlord == 'Buref':
+        m = re.match(r'^Lgh\s+[\w:]+,\s*([^:]+):', candidates[0])
+        if m: return m.group(1).strip()
+    # Riksbyggen: "Kålhagsvägen 16A   Kålhagsvägen 16A, Umeå Månadshyra ..."
+    if landlord == 'Riksbyggen':
+        m = re.match(r'^(.+?)(?:\s{2,}|\s*,\s*Umeå)', candidates[0])
+        if m: return m.group(1).strip()
+    # Lerstenen: "Stadsdel | Adress | ..." → adressen är parts[2]
+    if landlord == 'Lerstenen' and len(parts) >= 3:
+        return parts[2].strip()
+    # Default: första kandidat som har en siffra och inte är ett rent metadata-fält.
+    # Tillåter att fältet innehåller "X rok" (HSB packar in det i adress-strängen)
+    # och städar bort metadata efteråt.
+    def _is_pure_metadata(p):
+        if re.match(r'^\s*(Hyra|Månadshyra|Inflytt|Inflyttning|Från|Ledig|Tillgänglig|Vån\b)', p, re.IGNORECASE):
+            return True
+        if re.fullmatch(r'\s*\d+(?:[.,]\d+)?\s*(?:kvm|m²|m2)\s*', p, re.IGNORECASE):
+            return True
+        if re.search(r'\d\s*kr\b', p, re.IGNORECASE):
+            return True
+        if re.fullmatch(r'\s*\d{4}-\d{2}-\d{2}\s*', p):
+            return True
+        return False
+
+    def _clean(p):
+        # Plocka bort "X rok"-suffix om det hänger med (HSB)
+        p = re.sub(r',?\s*\d+\s*(?:rok|rum|rkv|roka|r o k)\b.*$', '', p, flags=re.IGNORECASE)
+        # Ta bort standalone "Umeå"
+        p = re.sub(r'\bUme[åa]\b', '', p, flags=re.IGNORECASE)
+        # Ta bort UMEÅ-suffix (Lansa)
+        p = re.sub(r'\s+UMEÅ\s*$', '', p, flags=re.IGNORECASE)
+        # Städa whitespace och kommatecken
+        p = re.sub(r'\s+', ' ', p).strip()
+        p = re.sub(r'\s+,', ',', p)         # "X , Y" -> "X, Y"
+        p = re.sub(r',\s*,', ',', p)        # ", ," -> ","
+        p = re.sub(r'^[,\s]+|[,\s]+$', '', p)
+        return p.strip()
+
+    for p in candidates:
+        if _is_pure_metadata(p):
+            continue
+        if re.search(r'\d', p):
+            cleaned = _clean(p)
+            if cleaned:
+                return cleaned
+    return _clean(candidates[0])
+
+
+def parse_listing(line, landlord):
+    """Returnera strukturerat lägenhetsobjekt."""
+    return {
+        'address': extract_address(line, landlord),
+        'rent': extract_rent(line),
+        'size': extract_size(line),
+        'rooms': extract_rooms(line),
+        'move_in': extract_move_in(line),
+    }
+
+
+# ---------- Inläsning ----------
 
 def load_listings():
     today_files = sorted(glob.glob(os.path.join(DATA_DIR, '*_today.txt')))
@@ -83,21 +169,44 @@ def load_listings():
         except Exception:
             continue
         for line in lines:
-            # Hoppa över "tomt-vakt"-rader som scrapers skriver när
-            # hyresvärden inte har några lediga lägenheter just nu.
+            # Hoppa över "tomt-vakt"-rader (scraper-körde-ok-men-noll-resultat)
             if '| Inga lediga' in line:
                 continue
             landlord = extract_landlord(line)
             link = extract_link(line) or LANDLORD_FALLBACK_URLS.get(landlord, '#')
             is_new = line not in yesterday
-            display = get_display_text(line, landlord)
+            parsed = parse_listing(line, landlord)
             listings.append({
                 'landlord': landlord,
-                'display': display,
                 'link': link,
                 'is_new': is_new,
+                'raw': line,
+                **parsed,
             })
     return listings
+
+
+# ---------- HTML-rendering ----------
+
+def _esc(s):
+    return (str(s) if s is not None else '').replace('&', '&amp;').replace('<', '&lt;').replace('"', '&quot;')
+
+def _format_rent(rent):
+    if rent is None:
+        return '— kr/mån'
+    # 7710 -> "7 710 kr/mån"
+    return f"{rent:,}".replace(',', ' ') + " kr/mån"
+
+def _format_meta(rooms, size, move_in):
+    bits = []
+    if rooms is not None:
+        bits.append(f"{rooms} rok")
+    if size is not None:
+        bits.append(f"{size:g} m²")
+    if move_in:
+        bits.append(f"Inflytt {move_in}")
+    return ' · '.join(bits)
+
 
 def build_html(listings):
     updated = datetime.now().strftime('%Y-%m-%d %H:%M')
@@ -105,29 +214,32 @@ def build_html(listings):
     new_count = sum(1 for l in listings if l['is_new'])
     landlords = sorted(set(l['landlord'] for l in listings))
 
-    # Build landlord filter buttons (visar bara hyresvärdar som faktiskt har lägenheter)
+    # Hyresvärds-filter (visar bara hyresvärdar som faktiskt har lägenheter)
     filter_buttons = '<button class="filter-btn active" onclick="filterLandlord(\'all\', this)">Alla</button>\n'
     for ll in landlords:
-        color = LANDLORD_COLORS.get(ll, '#888')
         count = sum(1 for x in listings if x['landlord'] == ll)
-        filter_buttons += f'<button class="filter-btn" style="--accent:{color}" onclick="filterLandlord(\'{ll}\', this)">{ll} ({count})</button>\n'
+        filter_buttons += f'<button class="filter-btn" onclick="filterLandlord({_esc(repr(ll))}, this)">{_esc(ll)} ({count})</button>\n'
 
-    # Build cards
+    # Kort
     cards_html = ''
     for l in listings:
-        color = LANDLORD_COLORS.get(l['landlord'], '#888')
         new_badge = '<span class="badge-new">NY</span>' if l['is_new'] else ''
-        escaped_display = l['display'].replace('&', '&amp;').replace('<', '&lt;').replace('"', '&quot;')
-        escaped_landlord = l['landlord'].replace("'", "\\'")
+        new_class = ' is-new' if l['is_new'] else ''
+        rent_attr = l['rent'] if l['rent'] is not None else 99999999
+        address = _esc(l['address']) or '(okänd adress)'
+        meta = _esc(_format_meta(l['rooms'], l['size'], l['move_in']))
+        meta_html = f'<div class="meta">{meta}</div>' if meta else ''
         cards_html += f'''
-<div class="card" data-landlord="{l['landlord']}" data-new="{'1' if l['is_new'] else '0'}">
-  <div class="card-header" style="background:{color}">
-    <span class="landlord-name">{l['landlord']}</span>
+<div class="card{new_class}" data-landlord="{_esc(l['landlord'])}" data-new="{'1' if l['is_new'] else '0'}" data-rent="{rent_attr}">
+  <div class="card-top">
+    <h3 class="address">{address}</h3>
     {new_badge}
   </div>
-  <div class="card-body">
-    <p class="listing-text">{escaped_display}</p>
-    <a href="{l['link']}" target="_blank" class="link-btn" style="--accent:{color}">Visa annons →</a>
+  {meta_html}
+  <div class="rent">{_format_rent(l['rent'])}</div>
+  <div class="card-foot">
+    <span class="landlord-tag">{_esc(l['landlord'])}</span>
+    <a href="{_esc(l['link'])}" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 '''
@@ -148,160 +260,196 @@ def build_html(listings):
 <style>
   *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #f0f2f5;
-    color: #1a1a2e;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    background: #f5f5f7;
+    color: #1c1c1e;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }}
+
   header {{
     background: #1a1a2e;
     color: #fff;
-    padding: 1.5rem 2rem;
+    padding: 1.2rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.5rem;
   }}
-  header h1 {{ font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }}
+  header h1 {{ font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }}
   .stats {{
     display: flex;
     gap: 1.2rem;
-    font-size: 0.9rem;
-    color: #aab;
+    font-size: 0.85rem;
+    color: #a8a8b3;
   }}
-  .stats strong {{ color: #fff; }}
-  .updated {{ font-size: 0.8rem; color: #778; }}
+  .stats strong {{ color: #fff; font-weight: 700; }}
+  .stats .new-pill {{ color: #ff6b6b; }}
+  .updated {{ font-size: 0.75rem; color: #6e6e80; }}
 
   .controls {{
     background: #fff;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 1rem 2rem;
+    border-bottom: 1px solid #e5e5ea;
+    padding: 0.9rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.6rem;
   }}
   .filter-group {{
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }}
   .filter-label {{
-    font-size: 0.82rem;
-    color: #555;
+    font-size: 0.78rem;
+    color: #6e6e73;
     font-weight: 600;
-    min-width: 80px;
+    min-width: 78px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
   }}
-  .status-btn {{
-    border: 2px solid transparent;
-    background: #f0f2f5;
-    color: #444;
-    padding: 0.4rem 1rem;
+  .status-btn, .filter-btn {{
+    border: 1px solid #e5e5ea;
+    background: #fff;
+    color: #1c1c1e;
+    padding: 0.35rem 0.85rem;
     border-radius: 999px;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     cursor: pointer;
-    transition: all 0.15s;
-    font-weight: 600;
+    transition: all 0.12s;
+    font-weight: 500;
+    font-family: inherit;
   }}
-  .status-btn:hover {{ background: #e2e4e8; }}
-  .status-btn.active {{
+  .status-btn:hover, .filter-btn:hover {{ background: #f0f0f4; }}
+  .status-btn.active, .filter-btn.active {{
     background: #1a1a2e;
     color: #fff;
     border-color: #1a1a2e;
   }}
   .status-btn.status-new.active {{
-    background: #e74c3c;
-    border-color: #e74c3c;
+    background: #ff3b30;
+    border-color: #ff3b30;
   }}
-  .filter-btn {{
-    border: 2px solid transparent;
-    background: #f0f2f5;
-    color: #444;
-    padding: 0.35rem 0.9rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-weight: 500;
+  .filter-input {{
+    border: 1px solid #e5e5ea;
+    background: #fff;
+    color: #1c1c1e;
+    padding: 0.35rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    font-family: inherit;
+    width: 100px;
   }}
-  .filter-btn:hover {{
-    background: #e2e4e8;
-  }}
-  .filter-btn.active {{
-    background: var(--accent, #1a1a2e);
-    color: #fff;
-    border-color: var(--accent, #1a1a2e);
-  }}
+  .filter-input:focus {{ outline: none; border-color: #1a1a2e; }}
+  select.filter-input {{ width: auto; cursor: pointer; }}
+
   .grid {{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-    padding: 1.5rem 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.8rem;
+    padding: 1.2rem 1.5rem;
     max-width: 1400px;
     margin: 0 auto;
   }}
+
   .card {{
     background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    transition: transform 0.15s, box-shadow 0.15s;
+    border: 1px solid #e5e5ea;
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: border-color 0.12s, box-shadow 0.12s, transform 0.12s;
   }}
   .card:hover {{
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    border-color: #d0d0d8;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    transform: translateY(-1px);
   }}
   .card[hidden] {{ display: none; }}
-  .card-header {{
-    padding: 0.6rem 1rem;
+  .card.is-new {{ border-color: #ffcec9; }}
+
+  .card-top {{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    color: #fff;
+    gap: 0.6rem;
   }}
-  .landlord-name {{ font-weight: 700; font-size: 0.9rem; letter-spacing: 0.3px; }}
+  .address {{
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1c1c1e;
+    line-height: 1.3;
+    letter-spacing: -0.1px;
+  }}
   .badge-new {{
-    background: #fff;
-    color: #e74c3c;
-    font-size: 0.7rem;
+    background: #ff3b30;
+    color: #fff;
+    font-size: 0.65rem;
     font-weight: 800;
     padding: 0.15rem 0.5rem;
     border-radius: 999px;
     letter-spacing: 0.5px;
+    flex-shrink: 0;
+    line-height: 1.3;
   }}
-  .card-body {{
-    padding: 0.9rem 1rem 1rem;
+  .meta {{
+    font-size: 0.82rem;
+    color: #6e6e73;
+    line-height: 1.4;
+  }}
+  .rent {{
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1c1c1e;
+    letter-spacing: -0.3px;
+    margin-top: 0.1rem;
+  }}
+  .card-foot {{
     display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid #f0f0f4;
   }}
-  .listing-text {{
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: #333;
-    word-break: break-word;
+  .landlord-tag {{
+    font-size: 0.72rem;
+    color: #6e6e73;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
   }}
   .link-btn {{
-    display: inline-block;
-    align-self: flex-start;
-    padding: 0.35rem 0.9rem;
-    background: var(--accent, #333);
+    padding: 0.3rem 0.8rem;
+    background: #1a1a2e;
     color: #fff;
-    border-radius: 6px;
-    font-size: 0.82rem;
+    border-radius: 7px;
+    font-size: 0.78rem;
     font-weight: 600;
     text-decoration: none;
-    transition: opacity 0.15s;
+    transition: background 0.12s;
   }}
-  .link-btn:hover {{ opacity: 0.85; }}
+  .link-btn:hover {{ background: #2a2a4e; }}
 
   .empty-state {{
     grid-column: 1 / -1;
     text-align: center;
-    padding: 3rem;
-    color: #888;
-    font-size: 1rem;
+    padding: 3rem 1rem;
+    color: #8e8e93;
+    font-size: 0.95rem;
+  }}
+
+  @media (max-width: 600px) {{
+    header {{ padding: 1rem; }}
+    .stats {{ gap: 0.8rem; font-size: 0.78rem; }}
+    .controls {{ padding: 0.8rem 1rem; }}
+    .filter-label {{ min-width: auto; }}
+    .grid {{ padding: 1rem; gap: 0.7rem; }}
   }}
 </style>
 </head>
@@ -312,20 +460,31 @@ def build_html(listings):
   <div class="stats">
     <span><strong>{total}</strong> lägenheter</span>
     <span><strong id="visible-count">{total}</strong> visas</span>
-    <span><strong style="color:#ff6b6b">{new_count}</strong> nya sedan igår</span>
+    <span class="new-pill"><strong>{new_count}</strong> nya sedan igår</span>
   </div>
   <span class="updated">Uppdaterad {updated}</span>
 </header>
 
 <div class="controls">
   <div class="filter-group">
-    <span class="filter-label">Visa:</span>
+    <span class="filter-label">Visa</span>
     <button class="status-btn active" onclick="filterStatus('all', this)">Alla ({total})</button>
     <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya ({new_count})</button>
   </div>
   <div class="filter-group">
-    <span class="filter-label">Hyresvärd:</span>
+    <span class="filter-label">Hyresvärd</span>
     {filter_buttons}
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Hyra & sort</span>
+    <span>Max</span>
+    <input id="max-rent" class="filter-input" type="number" min="0" step="500" placeholder="ingen gräns" oninput="applyFilters()">
+    <span>kr</span>
+    <select id="sort" class="filter-input" onchange="applyFilters()">
+      <option value="default">Sortering: standard</option>
+      <option value="rent-asc">Hyra (lägst först)</option>
+      <option value="rent-desc">Hyra (högst först)</option>
+    </select>
   </div>
 </div>
 
@@ -353,15 +512,35 @@ def build_html(listings):
   }}
 
   function applyFilters() {{
-    const cards = document.querySelectorAll('.card');
+    const maxRent = parseInt(document.getElementById('max-rent').value, 10);
+    const sort = document.getElementById('sort').value;
+    const grid = document.getElementById('grid');
+    const cards = Array.from(grid.querySelectorAll('.card'));
+
     let visible = 0;
     cards.forEach(card => {{
       const matchLandlord = currentLandlord === 'all' || card.dataset.landlord === currentLandlord;
       const matchNew = currentStatus === 'all' || card.dataset.new === '1';
-      const show = matchLandlord && matchNew;
+      const rent = parseInt(card.dataset.rent, 10);
+      const matchRent = isNaN(maxRent) || rent <= maxRent;
+      const show = matchLandlord && matchNew && matchRent;
       card.hidden = !show;
       if (show) visible++;
     }});
+
+    // Sortering: flytta om DOM-noderna
+    if (sort !== 'default') {{
+      const sorted = cards.slice().sort((a, b) => {{
+        const ra = parseInt(a.dataset.rent, 10);
+        const rb = parseInt(b.dataset.rent, 10);
+        return sort === 'rent-asc' ? ra - rb : rb - ra;
+      }});
+      // Spara empty-state-elementet och flytta korten
+      const empty = document.getElementById('empty');
+      sorted.forEach(c => grid.appendChild(c));
+      grid.appendChild(empty);
+    }}
+
     document.getElementById('visible-count').textContent = visible;
     document.getElementById('empty').hidden = visible > 0;
   }}
@@ -380,6 +559,7 @@ def build_html(listings):
 </html>'''
     return html
 
+
 def main():
     print(f"Läser datafiler från: {DATA_DIR}")
     listings = load_listings()
@@ -391,6 +571,7 @@ def main():
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
         f.write(html)
     print(f"Dashboard genererad: {OUT_FILE}")
+
 
 if __name__ == '__main__':
     main()
