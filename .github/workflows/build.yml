@@ -1,0 +1,57 @@
+name: Build dashboard
+
+on:
+  schedule:
+    # Var fjärde timme (6 ggr/dygn), UTC
+    - cron: '0 */4 * * *'
+  workflow_dispatch: {}  # tillåt manuell körning från fliken Actions
+
+# Förhindra att två körningar krockar med varandras commits
+concurrency:
+  group: build-dashboard
+  cancel-in-progress: false
+
+permissions:
+  contents: write  # behövs för att committa data/ + index.html tillbaka
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    env:
+      BALTIC_USER: ${{ secrets.BALTIC_USER }}
+      BALTIC_PASS: ${{ secrets.BALTIC_PASS }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sätt upp Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Installera beroenden
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Installera Playwright Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: Kör scrapers + generera HTML
+        run: python build_dashboard.py
+
+      - name: Committa uppdaterad data och index.html
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ index.html
+          if git diff --cached --quiet; then
+            echo "Inga ändringar att committa."
+          else
+            git commit -m "auto: uppdatera lägenheter $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

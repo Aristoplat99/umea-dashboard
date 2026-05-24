@@ -3,7 +3,10 @@ import os
 import re
 from datetime import datetime
 
-DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'UmeaSniperUpgrade', 'data'))
+_LOCAL_DATA = os.path.join(os.path.dirname(__file__), 'data')
+_EXTERNAL_DATA = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'UmeaSniperUpgrade', 'data'))
+# Föredra lokal data/ om den har innehåll, annars fall tillbaka på systerprojektet (lokal dev).
+DATA_DIR = _LOCAL_DATA if glob.glob(os.path.join(_LOCAL_DATA, '*_today.txt')) else _EXTERNAL_DATA
 OUT_FILE = os.path.join(os.path.dirname(__file__), 'index.html')
 
 LANDLORD_FALLBACK_URLS = {
