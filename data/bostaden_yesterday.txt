@@ -1,8 +1,6 @@
 Bostaden | Axtorpsvägen 38 A | 7710 kr/mån | 78 kvm | 4 Rum och kök | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2703001180115/
-Bostaden | Fysikgränd 35 | 6430 kr/mån | 65 kvm | 3 Rum och kök | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301019010103/
 Bostaden | Fysikgränd 37 | 6342 kr/mån | 65 kvm | 3 Rum och kök | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301020010101/
 Bostaden | Historiegränd 18 A | 6983 kr/mån | 68 kvm | 3 Rum och kök | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3306002010102/
-Bostaden | Istidsgatan 42 | 6696 kr/mån | 55 kvm | 2 Rum och kök | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2802202010102/
 Bostaden | Pedagoggränd 1 B | 4824 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302001020433/
 Bostaden | Pedagoggränd 1 B | 4824 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302001020452/
 Bostaden | Pedagoggränd 1 B | 5541 kr/mån | 24 kvm | 1 Rum alkov och kokvrå | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302001020337/
@@ -12,12 +10,9 @@ Bostaden | Pedagoggränd 11 A | 8974 kr/mån | 68 kvm | 3 Rum och kök | Inflytt
 Bostaden | Pedagoggränd 11 B | 8950 kr/mån | 68 kvm | 3 Rum och kök | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302010020201/
 Bostaden | Pedagoggränd 11 D | 6257 kr/mån | 44 kvm | 2 Rum och kokv | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302012040002/
 Bostaden | Pedagoggränd 11 K | 6110 kr/mån | 44 kvm | 2 Rum och kokv | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302011010102/
-Bostaden | Pedagoggränd 7 A | 4689 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302014020336/
 Bostaden | Pedagoggränd 7 A | 4705 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302014020132/
 Bostaden | Pedagoggränd 9 A | 5648 kr/mån | 24 kvm | 1 Rum alkov och kokvrå | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302013020435/
-Bostaden | Pedagoggränd 9 A | 5733 kr/mån | 30 kvm | 1 Rum alkov och kokvrå | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302013020033/
 Bostaden | Rullstensgatan 17 | 6375 kr/mån | 54 kvm | 2 Rum och kök | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/280300401-106/
-Bostaden | Rullstensgatan 19 | 4821 kr/mån | 43 kvm | 1 Rum och kokv | Inflyttning: 2026-08-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2803005010004/
 Bostaden | Rullstensgatan 23 | 5604 kr/mån | 42 kvm | 1 Rum alkov och kök | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2803007010405/
 Bostaden | Stipendiegränd 6 D | 7118 kr/mån | 68 kvm | 3 Rum och kök | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305009030202/
 Bostaden | Älvans Väg 127 | 7314 kr/mån | 61 kvm | 2 Rum och kök | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3501008010209/
