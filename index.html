@@ -258,17 +258,17 @@
 <header>
   <h1>Umeå Bostadsdashboard</h1>
   <div class="stats">
-    <span><strong>42</strong> lägenheter</span>
-    <span><strong id="visible-count">42</strong> visas</span>
+    <span><strong>39</strong> lägenheter</span>
+    <span><strong id="visible-count">39</strong> visas</span>
     <span class="new-pill"><strong>1</strong> nya sedan igår</span>
   </div>
-  <span class="updated">Uppdaterad 2026-06-12 03:53</span>
+  <span class="updated">Uppdaterad 2026-06-12 08:27</span>
 </header>
 
 <div class="controls">
   <div class="filter-group">
     <span class="filter-label">Visa</span>
-    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (42)</button>
+    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (39)</button>
     <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (1)</button>
   </div>
   <div class="filter-group">
@@ -276,10 +276,10 @@
     <button class="filter-btn active" onclick="filterLandlord('all', this)">Alla</button>
 <button class="filter-btn" onclick="filterLandlord('Bostaden', this)">Bostaden (8)</button>
 <button class="filter-btn" onclick="filterLandlord('Buref', this)">Buref (5)</button>
+<button class="filter-btn" onclick="filterLandlord('Grannstaden', this)">Grannstaden (1)</button>
 <button class="filter-btn" onclick="filterLandlord('HSB', this)">HSB (1)</button>
 <button class="filter-btn" onclick="filterLandlord('Heimstaden', this)">Heimstaden (3)</button>
 <button class="filter-btn" onclick="filterLandlord('Lansa', this)">Lansa (6)</button>
-<button class="filter-btn" onclick="filterLandlord('Lerstenen', this)">Lerstenen (4)</button>
 <button class="filter-btn" onclick="filterLandlord('Riksbyggen', this)">Riksbyggen (1)</button>
 <button class="filter-btn" onclick="filterLandlord('Rikshem', this)">Rikshem (5)</button>
 <button class="filter-btn" onclick="filterLandlord('Sveafastigheter', this)">Sveafastigheter (9)</button>
@@ -478,6 +478,19 @@
   </div>
 </div>
 
+<div class="card is-new" data-landlord="Grannstaden" data-new="1" data-rent="10890" data-size="92.0">
+  <div class="card-top">
+    <h3 class="address">Östra Kyrkogatan 113</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">3 rok · 92 m² · Inflytt 2026-07-01</div>
+  <div class="rent">10 890 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Grannstaden</span>
+    <a href="https://minasidor.grannstaden.se/ledigt/detalj/id/410201-1105" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
 <div class="card" data-landlord="Heimstaden" data-new="0" data-rent="10481" data-size="60.0">
   <div class="card-top">
     <h3 class="address">Kvartsvägen 11 B</h3>
@@ -605,58 +618,6 @@
   <div class="card-foot">
     <span class="landlord-tag">Lansa</span>
     <a href="https://www.homeq.se/lagenhet/261513-2rum-umea-vasterbottens-lan-ortgrand-5b" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card" data-landlord="Lerstenen" data-new="0" data-rent="4386" data-size="36.0">
-  <div class="card-top">
-    <h3 class="address">Sandhallavägen 3 A</h3>
-    
-  </div>
-  <div class="meta">1 rok · 36 m² · Inflytt 2026-10-01</div>
-  <div class="rent">4 386 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Lerstenen</span>
-    <a href="https://lerstenen.se/bostad/2084" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card" data-landlord="Lerstenen" data-new="0" data-rent="11215" data-size="68.7">
-  <div class="card-top">
-    <h3 class="address">Lyktvägen 8</h3>
-    
-  </div>
-  <div class="meta">3 rok · 68.7 m² · Inflytt 2026-09-01</div>
-  <div class="rent">11 215 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Lerstenen</span>
-    <a href="https://lerstenen.se/bostad/4913" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card" data-landlord="Lerstenen" data-new="0" data-rent="16594" data-size="92.0">
-  <div class="card-top">
-    <h3 class="address">Bankgatan 18 A</h3>
-    
-  </div>
-  <div class="meta">4 rok · 92 m² · Inflytt 2026-09-01</div>
-  <div class="rent">16 594 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Lerstenen</span>
-    <a href="https://lerstenen.se/bostad/5255" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card" data-landlord="Lerstenen" data-new="0" data-rent="9110" data-size="84.0">
-  <div class="card-top">
-    <h3 class="address">Hamrinsvägen 5</h3>
-    
-  </div>
-  <div class="meta">3 rok · 84 m² · Inflytt 2026-10-01</div>
-  <div class="rent">9 110 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Lerstenen</span>
-    <a href="https://lerstenen.se/bostad/2608" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 
@@ -842,10 +803,10 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="6096" data-size="25.2">
+<div class="card" data-landlord="Sveafastigheter" data-new="0" data-rent="6096" data-size="25.2">
   <div class="card-top">
     <h3 class="address">Tvistevägen 43</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">25.2 m²</div>
   <div class="rent">6 096 kr/mån</div>
