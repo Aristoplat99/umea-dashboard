@@ -1,5 +1,7 @@
 Buref | Lgh 02:141, Sofiehemsvägen 76B: 1 Rkv, våning Bv,  41kvm, 8.423kr/månad         Ledig från 2026-08-01
 Buref | Lgh 1002, Lagmansgatan 33B: 1 Roka, våning E,  31kvm, 7.819kr/månad         Ledig från 2026-06-01
+Buref | Lgh 10:03, Furugränd 1B: 1 Rok, våning 0,5tr,  18kvm, 3.500kr/månad        Ledig för omgående inflytt
 Buref | Lgh 1102, Lagmansgatan 33B: 2 Rok, våning 1tr, 44,3kvm, 9.297kr/månad        Ledig för omgående inflytt
 Buref | Lgh 1104, Kungsgårdsvägen 63: 2 Rok, våning 1tr,  53,7kvm, 10.159kr/månad         Ledig för omgående inflytt
+Buref | Lgh 11:02, Furugränd 1B: 1 Rok, våning 1,5tr,  18kvm, 3.500kr/månad        Ledig för omgående inflytt
 Buref | Lgh 1401, Kungsgårdsvägen 63: 3 Rok, våning 4tr,  59,4kvm, 11.228kr/månad        Ledig från 2026-07-01
