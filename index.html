@@ -258,30 +258,31 @@
 <header>
   <h1>Umeå Bostadsdashboard</h1>
   <div class="stats">
-    <span><strong>30</strong> lägenheter</span>
-    <span><strong id="visible-count">30</strong> visas</span>
-    <span class="new-pill"><strong>4</strong> nya sedan igår</span>
+    <span><strong>35</strong> lägenheter</span>
+    <span><strong id="visible-count">35</strong> visas</span>
+    <span class="new-pill"><strong>8</strong> nya sedan igår</span>
   </div>
-  <span class="updated">Uppdaterad 2026-06-16 09:34</span>
+  <span class="updated">Uppdaterad 2026-06-16 16:51</span>
 </header>
 
 <div class="controls">
   <div class="filter-group">
     <span class="filter-label">Visa</span>
-    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (30)</button>
-    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (4)</button>
+    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (35)</button>
+    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (8)</button>
   </div>
   <div class="filter-group">
     <span class="filter-label">Hyresvärd</span>
     <button class="filter-btn active" onclick="filterLandlord('all', this)">Alla</button>
 <button class="filter-btn" onclick="filterLandlord('Bostaden', this)">Bostaden (3)</button>
-<button class="filter-btn" onclick="filterLandlord('Buref', this)">Buref (7)</button>
+<button class="filter-btn" onclick="filterLandlord('Buref', this)">Buref (8)</button>
+<button class="filter-btn" onclick="filterLandlord('Grannstaden', this)">Grannstaden (1)</button>
 <button class="filter-btn" onclick="filterLandlord('HSB', this)">HSB (1)</button>
-<button class="filter-btn" onclick="filterLandlord('Heimstaden', this)">Heimstaden (1)</button>
+<button class="filter-btn" onclick="filterLandlord('Heimstaden', this)">Heimstaden (3)</button>
 <button class="filter-btn" onclick="filterLandlord('Lansa', this)">Lansa (6)</button>
 <button class="filter-btn" onclick="filterLandlord('Lerstenen', this)">Lerstenen (3)</button>
 <button class="filter-btn" onclick="filterLandlord('Riksbyggen', this)">Riksbyggen (1)</button>
-<button class="filter-btn" onclick="filterLandlord('Rikshem', this)">Rikshem (1)</button>
+<button class="filter-btn" onclick="filterLandlord('Rikshem', this)">Rikshem (2)</button>
 <button class="filter-btn" onclick="filterLandlord('Sveafastigheter', this)">Sveafastigheter (7)</button>
 
   </div>
@@ -322,10 +323,10 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4643" data-size="20.0">
+<div class="card" data-landlord="Bostaden" data-new="0" data-rent="4643" data-size="20.0">
   <div class="card-top">
     <h3 class="address">Pedagoggränd 1 C</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">1 rok · 20 m² · Inflytt 2026-09-01</div>
   <div class="rent">4 643 kr/mån</div>
@@ -361,10 +362,10 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="10246" data-size="54.2">
+<div class="card" data-landlord="Buref" data-new="0" data-rent="10246" data-size="54.2">
   <div class="card-top">
     <h3 class="address">Lagmansgatan 33A</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">2 rok · 54.2 m² · Inflytt 2026-09-01</div>
   <div class="rent">10 246 kr/mån</div>
@@ -374,12 +375,12 @@
   </div>
 </div>
 
-<div class="card" data-landlord="Buref" data-new="0" data-rent="7819" data-size="31.0">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="7819" data-size="31.0">
   <div class="card-top">
     <h3 class="address">Lagmansgatan 33B</h3>
-    
+    <span class="badge-new">NY</span>
   </div>
-  <div class="meta">1 rok · 31 m² · Inflytt 2026-06-01</div>
+  <div class="meta">1 rok · 31 m²</div>
   <div class="rent">7 819 kr/mån</div>
   <div class="card-foot">
     <span class="landlord-tag">Buref</span>
@@ -400,10 +401,10 @@
   </div>
 </div>
 
-<div class="card" data-landlord="Buref" data-new="0" data-rent="9297" data-size="44.3">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="9297" data-size="44.3">
   <div class="card-top">
     <h3 class="address">Lagmansgatan 33B</h3>
-    
+    <span class="badge-new">NY</span>
   </div>
   <div class="meta">2 rok · 44.3 m²</div>
   <div class="rent">9 297 kr/mån</div>
@@ -426,16 +427,68 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="11228" data-size="59.4">
+<div class="card is-new" data-landlord="Buref" data-new="1" data-rent="10236" data-size="62.1">
+  <div class="card-top">
+    <h3 class="address">Kronoskogsvägen 37</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">2 rok · 62.1 m² · Inflytt 2026-08-01</div>
+  <div class="rent">10 236 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Buref</span>
+    <a href="https://buref.se/lediga-lagenheter/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Buref" data-new="0" data-rent="11228" data-size="59.4">
   <div class="card-top">
     <h3 class="address">Kungsgårdsvägen 63</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">3 rok · 59.4 m² · Inflytt 2026-08-01</div>
   <div class="rent">11 228 kr/mån</div>
   <div class="card-foot">
     <span class="landlord-tag">Buref</span>
     <a href="https://buref.se/lediga-lagenheter/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card is-new" data-landlord="Grannstaden" data-new="1" data-rent="9241" data-size="59.0">
+  <div class="card-top">
+    <h3 class="address">Östra Kyrkogatan 113</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">2 rok · 59 m² · Inflytt 2026-07-01</div>
+  <div class="rent">9 241 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Grannstaden</span>
+    <a href="https://minasidor.grannstaden.se/ledigt/detalj/id/410201-1101" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="8311" data-size="56.0">
+  <div class="card-top">
+    <h3 class="address">Flintvägen 2 B</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">56 m²</div>
+  <div class="rent">8 311 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Heimstaden</span>
+    <a href="https://heimstaden.com/se/sok-lagenhet/Umea-56m²-1194102-1203" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="8987" data-size="54.0">
+  <div class="card-top">
+    <h3 class="address">Gnejsvägen 1</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">54 m²</div>
+  <div class="rent">8 987 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Heimstaden</span>
+    <a href="https://heimstaden.com/se/sok-lagenhet/Umea-54m²-1195100-1009" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 
@@ -595,6 +648,19 @@
   </div>
 </div>
 
+<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="11190" data-size="78.0">
+  <div class="card-top">
+    <h3 class="address">Mariehem Morkullevägen 18 J</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">3 rok · 78 m²</div>
+  <div class="rent">11 190 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Rikshem</span>
+    <a href="https://minasidor.rikshem.se/ledigt/detalj/id/4816-181152" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
 <div class="card" data-landlord="Rikshem" data-new="0" data-rent="5526" data-size="33.0">
   <div class="card-top">
     <h3 class="address">Tomtebo Vittervägen 174</h3>
@@ -621,29 +687,29 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="5130" data-size="30.0">
+<div class="card is-new" data-landlord="Sveafastigheter" data-new="1" data-rent="5680" data-size="26.0">
+  <div class="card-top">
+    <h3 class="address">Hagmarksvägen 22</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">26 m²</div>
+  <div class="rent">5 680 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Sveafastigheter</span>
+    <a href="https://sveafastigheter.se/lediga-lagenheter/hagmarksvagen-22" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Sveafastigheter" data-new="0" data-rent="5130" data-size="30.0">
   <div class="card-top">
     <h3 class="address">Korpralsvägen 40 B</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">30 m²</div>
   <div class="rent">5 130 kr/mån</div>
   <div class="card-foot">
     <span class="landlord-tag">Sveafastigheter</span>
     <a href="https://sveafastigheter.se/lediga-lagenheter/korpralsvagen-40-b" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card" data-landlord="Sveafastigheter" data-new="0" data-rent="7131" data-size="40.5">
-  <div class="card-top">
-    <h3 class="address">Korpralsvägen 42 C</h3>
-    
-  </div>
-  <div class="meta">40.5 m²</div>
-  <div class="rent">7 131 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Sveafastigheter</span>
-    <a href="https://sveafastigheter.se/lediga-lagenheter/korpralsvagen-42-c" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 
