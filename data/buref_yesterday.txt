@@ -1,7 +1,7 @@
 Buref | Lgh 1, Sofiehemsvägen 64: 3 Roka, våning 1/2 trapp,  75kvm, 11.200kr/månad        Ledig från 2026-09-01
 Buref | Lgh 1001, Lagmansgatan 33A: 2 Rok, våning E, 54,2kvm, 10.246kr/månad        Ledig från 2026-09-01
-Buref | Lgh 1002, Lagmansgatan 33B: 1 Roka, våning E,  31kvm, 7.819kr/månad         Ledig för omgående inflytt
 Buref | Lgh 10:02, Furugränd 1B: 1 Rok, våning 0,5tr,  18kvm, 3.500kr/månad        Ledig för omgående inflytt
 Buref | Lgh 13:16, Kronoskogsvägen 37: 2 Rok, våning 2tr,  62,1kvm, 10.236kr/månad        Ledig från 2026-08-01
+Buref | Lgh 14:05, Kronoskogsvägen 5: 2 Roka, våning 2tr,  62,1kvm, 9.795kr/månad        Ledig från 2026-10-01
 Buref | Lgh 14:13, Kronoskogsvägen 9: 1 Roka, våning E,  41,4kvm, 7.700kr/månad        Ledig från 2026-09-01
 Buref | Lgh 15:14, Kronoskogsvägen 13: 3 Roka, våning E,  77,6kvm, 12.300kr/månad        Ledig från 2026-09-01
