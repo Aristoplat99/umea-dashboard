@@ -3,4 +3,4 @@ Buref | Lgh 1001, Lagmansgatan 33A: 2 Rok, våning E, 54,2kvm, 10.246kr/månad 
 Buref | Lgh 13:16, Kronoskogsvägen 37: 2 Rok, våning 2tr,  62,1kvm, 10.236kr/månad        Ledig från 2026-08-01
 Buref | Lgh 14:05, Kronoskogsvägen 5: 2 Roka, våning 2tr,  62,1kvm, 9.795kr/månad        Ledig från 2026-10-01
 Buref | Lgh 14:13, Kronoskogsvägen 9: 1 Roka, våning E,  41,4kvm, 7.700kr/månad        Ledig från 2026-09-01
-Buref | Lgh 15:14, Kronoskogsvägen 13: 3 Roka, våning E,  77,6kvm, 12.300kr/månad        Ledig från 2026-09-01
+Buref | Lgh 15:14, Kronoskogsvägen 15: 3 Rok, våning E,  77,6kvm, 12.300kr/månad        Ledig från 2026-09-01
