@@ -258,24 +258,25 @@
 <header>
   <h1>Umeå Bostadsdashboard</h1>
   <div class="stats">
-    <span><strong>110</strong> lägenheter</span>
-    <span><strong id="visible-count">110</strong> visas</span>
-    <span class="new-pill"><strong>0</strong> nya sedan igår</span>
+    <span><strong>112</strong> lägenheter</span>
+    <span><strong id="visible-count">112</strong> visas</span>
+    <span class="new-pill"><strong>3</strong> nya sedan igår</span>
   </div>
-  <span class="updated">Uppdaterad 2026-07-21 10:27</span>
+  <span class="updated">Uppdaterad 2026-07-21 13:48</span>
 </header>
 
 <div class="controls">
   <div class="filter-group">
     <span class="filter-label">Visa</span>
-    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (110)</button>
-    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (0)</button>
+    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (112)</button>
+    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (3)</button>
   </div>
   <div class="filter-group">
     <span class="filter-label">Hyresvärd</span>
     <button class="filter-btn active" onclick="filterLandlord('all', this)">Alla</button>
 <button class="filter-btn" onclick="filterLandlord('Bostaden', this)">Bostaden (85)</button>
 <button class="filter-btn" onclick="filterLandlord('Buref', this)">Buref (6)</button>
+<button class="filter-btn" onclick="filterLandlord('HSB', this)">HSB (2)</button>
 <button class="filter-btn" onclick="filterLandlord('Heimstaden', this)">Heimstaden (2)</button>
 <button class="filter-btn" onclick="filterLandlord('Lansa', this)">Lansa (6)</button>
 <button class="filter-btn" onclick="filterLandlord('Lerstenen', this)">Lerstenen (1)</button>
@@ -1517,6 +1518,32 @@
   </div>
 </div>
 
+<div class="card is-new" data-landlord="HSB" data-new="1" data-rent="10952" data-size="84.0">
+  <div class="card-top">
+    <h3 class="address">Axtorpsvägen 32 A, Berghem</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">3 rok · 84 m² · Inflytt 2026-10-01</div>
+  <div class="rent">10 952 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">HSB</span>
+    <a href="https://www.hsb.se/sok-bostad/sok-hyresratter/vasterbotten/umea/fastigheter/lappkastet-2/31/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card is-new" data-landlord="HSB" data-new="1" data-rent="7440" data-size="60.0">
+  <div class="card-top">
+    <h3 class="address">Skolgatan 58 B, Centrala stan</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">2 rok · 60 m² · Inflytt 2026-10-01</div>
+  <div class="rent">7 440 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">HSB</span>
+    <a href="https://www.hsb.se/sok-bostad/sok-hyresratter/vasterbotten/umea/fastigheter/balder-9/23/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
 <div class="card" data-landlord="Lansa" data-new="0" data-rent="99999999" data-size="35.4">
   <div class="card-top">
     <h3 class="address">(okänd adress)</h3>
@@ -1540,6 +1567,19 @@
   <div class="card-foot">
     <span class="landlord-tag">Lansa</span>
     <a href="https://www.homeq.se/lagenhet/268418-3rum-umea-vasterbottens-lan-nackens-vag-12" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="33.0">
+  <div class="card-top">
+    <h3 class="address">Kålhagsvägen 21D</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">1 rok · 33 m² · Inflytt 2026-11-01</div>
+  <div class="rent">— kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Lansa</span>
+    <a href="https://www.homeq.se/lagenhet/270101-1rum-umea-vasterbottens-lan-kalhagsvagen-21d" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 
@@ -1579,19 +1619,6 @@
   <div class="card-foot">
     <span class="landlord-tag">Lansa</span>
     <a href="https://www.homeq.se/lagenhet/268425-2rum-umea-vasterbottens-lan-sjoravagen-24" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card" data-landlord="Lansa" data-new="0" data-rent="99999999" data-size="40.0">
-  <div class="card-top">
-    <h3 class="address">Örtgränd 3</h3>
-    
-  </div>
-  <div class="meta">2 rok · 40 m² · Inflytt 2026-10-01</div>
-  <div class="rent">— kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Lansa</span>
-    <a href="https://www.homeq.se/lagenhet/265089-2rum-umea-vasterbottens-lan-ortgrand-3" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 
