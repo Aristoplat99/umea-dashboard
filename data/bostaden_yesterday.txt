@@ -1,4 +1,7 @@
 Bostaden | Fysikgränd 13 A | 3440 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-09-07 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301007020001/
+Bostaden | Fysikgränd 15 C | 3693 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301008030103/
+Bostaden | Fysikgränd 17 A | 3640 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301009010103/
+Bostaden | Fysikgränd 9 C | 3593 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-09-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301005030101/
 Bostaden | Gluntens Väg 19 | 4053 kr/mån | 32 kvm | 1 Rum och kök | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3201008010502/
 Bostaden | Historiegränd 14 A | 5957 kr/mån | 34 kvm | 2 Rum och kokv | Inflyttning: 2026-10-14 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3306006010053/
 Bostaden | Historiegränd 18 D | 7044 kr/mån | 68 kvm | 3 Rum och kök | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3306002040202/
@@ -17,3 +20,4 @@ Bostaden | Rullstensgatan 6 | 3813 kr/mån | 21 kvm | Enkelrum | Inflyttning: 20
 Bostaden | Stipendiegränd 10 A | 3362 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305013030104/
 Bostaden | Stipendiegränd 10 D | 3362 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305014030112/
 Bostaden | Stipendiegränd 8 B | 3369 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305007010210/
+Bostaden | Östra Kyrkogatan 22 A | 6442 kr/mån | 53 kvm | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2103107100007/
