@@ -258,27 +258,27 @@
 <header>
   <h1>Umeå Bostadsdashboard</h1>
   <div class="stats">
-    <span><strong>32</strong> lägenheter</span>
-    <span><strong id="visible-count">32</strong> visas</span>
-    <span class="new-pill"><strong>11</strong> nya sedan igår</span>
+    <span><strong>27</strong> lägenheter</span>
+    <span><strong id="visible-count">27</strong> visas</span>
+    <span class="new-pill"><strong>3</strong> nya sedan igår</span>
   </div>
-  <span class="updated">Uppdaterad 2026-08-26 08:42</span>
+  <span class="updated">Uppdaterad 2026-08-26 12:50</span>
 </header>
 
 <div class="controls">
   <div class="filter-group">
     <span class="filter-label">Visa</span>
-    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (32)</button>
-    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (11)</button>
+    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (27)</button>
+    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (3)</button>
   </div>
   <div class="filter-group">
     <span class="filter-label">Hyresvärd</span>
     <button class="filter-btn active" onclick="filterLandlord('all', this)">Alla</button>
-<button class="filter-btn" onclick="filterLandlord('Bostaden', this)">Bostaden (17)</button>
+<button class="filter-btn" onclick="filterLandlord('Bostaden', this)">Bostaden (9)</button>
 <button class="filter-btn" onclick="filterLandlord('Buref', this)">Buref (2)</button>
 <button class="filter-btn" onclick="filterLandlord('Heimstaden', this)">Heimstaden (3)</button>
-<button class="filter-btn" onclick="filterLandlord('Lansa', this)">Lansa (3)</button>
-<button class="filter-btn" onclick="filterLandlord('Lerstenen', this)">Lerstenen (2)</button>
+<button class="filter-btn" onclick="filterLandlord('Lansa', this)">Lansa (5)</button>
+<button class="filter-btn" onclick="filterLandlord('Lerstenen', this)">Lerstenen (3)</button>
 <button class="filter-btn" onclick="filterLandlord('Riksbyggen', this)">Riksbyggen (1)</button>
 <button class="filter-btn" onclick="filterLandlord('Rikshem', this)">Rikshem (1)</button>
 <button class="filter-btn" onclick="filterLandlord('Sveafastigheter', this)">Sveafastigheter (3)</button>
@@ -308,36 +308,10 @@
 
 <div class="grid" id="grid">
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="3970" data-size="22.0">
-  <div class="card-top">
-    <h3 class="address">Axtorpsvägen 40</h3>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="meta">22 m² · Inflytt 2026-11-01</div>
-  <div class="rent">3 970 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Bostaden</span>
-    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/2703101010219/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4783" data-size="34.0">
+<div class="card" data-landlord="Bostaden" data-new="0" data-rent="7372" data-size="62.0">
   <div class="card-top">
     <h3 class="address">Axtorpsvägen 42</h3>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="meta">1 rok · 34 m² · Inflytt 2026-11-01</div>
-  <div class="rent">4 783 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Bostaden</span>
-    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/270320101-113/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="7372" data-size="62.0">
-  <div class="card-top">
-    <h3 class="address">Axtorpsvägen 42</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">2 rok · 62 m² · Inflytt 2026-11-01</div>
   <div class="rent">7 372 kr/mån</div>
@@ -347,10 +321,10 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="3553" data-size="20.0">
+<div class="card" data-landlord="Bostaden" data-new="0" data-rent="3553" data-size="20.0">
   <div class="card-top">
     <h3 class="address">Fysikgränd 15 A</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">20 m² · Inflytt 2026-09-15</div>
   <div class="rent">3 553 kr/mån</div>
@@ -370,19 +344,6 @@
   <div class="card-foot">
     <span class="landlord-tag">Bostaden</span>
     <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3301011040209/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="3447" data-size="20.0">
-  <div class="card-top">
-    <h3 class="address">Fysikgränd 3 F</h3>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="meta">20 m² · Inflytt 2026-11-01</div>
-  <div class="rent">3 447 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Bostaden</span>
-    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3301002060002/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 
@@ -412,10 +373,10 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="6187" data-size="65.0">
+<div class="card" data-landlord="Bostaden" data-new="0" data-rent="6187" data-size="65.0">
   <div class="card-top">
     <h3 class="address">Fysikgränd 41</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">3 rok · 65 m² · Inflytt 2026-11-01</div>
   <div class="rent">6 187 kr/mån</div>
@@ -438,32 +399,6 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4648" data-size="20.0">
-  <div class="card-top">
-    <h3 class="address">Pedagoggränd 1 A</h3>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="meta">1 rok · 20 m² · Inflytt 2026-11-01</div>
-  <div class="rent">4 648 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Bostaden</span>
-    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302002010136/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="4185" data-size="20.0">
-  <div class="card-top">
-    <h3 class="address">Pedagoggränd 9 B</h3>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="meta">20 m² · Inflytt 2026-11-01</div>
-  <div class="rent">4 185 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Bostaden</span>
-    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3302009010002/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
 <div class="card" data-landlord="Bostaden" data-new="0" data-rent="4851" data-size="43.0">
   <div class="card-top">
     <h3 class="address">Rullstensgatan 17</h3>
@@ -474,45 +409,6 @@
   <div class="card-foot">
     <span class="landlord-tag">Bostaden</span>
     <a href="https://www.bostaden.umea.se/ledigt/detalj/id/2803004010005/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="3950" data-size="21.0">
-  <div class="card-top">
-    <h3 class="address">Rullstensgatan 178</h3>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="meta">21 m² · Inflytt 2026-11-01</div>
-  <div class="rent">3 950 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Bostaden</span>
-    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/2802401010103/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="3950" data-size="21.0">
-  <div class="card-top">
-    <h3 class="address">Rullstensgatan 178</h3>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="meta">21 m² · Inflytt 2026-11-01</div>
-  <div class="rent">3 950 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Bostaden</span>
-    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/2802401010104/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
-  </div>
-</div>
-
-<div class="card is-new" data-landlord="Bostaden" data-new="1" data-rent="3362" data-size="20.0">
-  <div class="card-top">
-    <h3 class="address">Stipendiegränd 10 B</h3>
-    <span class="badge-new">NY</span>
-  </div>
-  <div class="meta">20 m² · Inflytt 2026-11-01</div>
-  <div class="rent">3 362 kr/mån</div>
-  <div class="card-foot">
-    <span class="landlord-tag">Bostaden</span>
-    <a href="https://www.bostaden.umea.se/ledigt/detalj/id/3305013050102/" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 
@@ -633,6 +529,32 @@
   </div>
 </div>
 
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="34.0">
+  <div class="card-top">
+    <h3 class="address">Senior Mariehemsvägen 6G</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">1 rok · 34 m² · Inflytt 2026-12-01</div>
+  <div class="rent">— kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Lansa</span>
+    <a href="https://www.homeq.se/lagenhet/276576-1rum-umea-vasterbottens-lan-mariehemsvagen-6g" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="58.0">
+  <div class="card-top">
+    <h3 class="address">Senior Mariehemsvägen 6H</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">3 rok · 58 m² · Inflytt 2026-12-01</div>
+  <div class="rent">— kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Lansa</span>
+    <a href="https://www.homeq.se/lagenhet/276572-3rum-umea-vasterbottens-lan-mariehemsvagen-6h" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
 <div class="card" data-landlord="Lerstenen" data-new="0" data-rent="9046" data-size="49.0">
   <div class="card-top">
     <h3 class="address">Lagmansgatan 6 A</h3>
@@ -643,6 +565,19 @@
   <div class="card-foot">
     <span class="landlord-tag">Lerstenen</span>
     <a href="https://lerstenen.se/bostad/5292" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card is-new" data-landlord="Lerstenen" data-new="1" data-rent="12868" data-size="84.0">
+  <div class="card-top">
+    <h3 class="address">Sagovägen 20</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">4 rok · 84 m² · Inflytt 2026-11-30</div>
+  <div class="rent">12 868 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Lerstenen</span>
+    <a href="https://lerstenen.se/bostad/4763" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
   </div>
 </div>
 
