@@ -1,4 +1,4 @@
-Buref | Lgh 1001, Segelgatan 10 : 3 Rok, våning 0tr, hyra ej klar
+Buref | Lgh 1001, Segelgatan 10 : 3 Rok, våning 0,5tr, 75.7kvm, hyra ej klar
 Buref | Lgh 1102, Lagmansgatan 33B: 2 Rok, våning 1tr,  44,3kvm, 9.297kr/månad        Ledig från 2026-11-01
 Buref | Lgh 1103, Sofiehemsvägen 78: 1 Rok, Våning 1tr, 28kvm, 4 325,33     Ledig från 2026-10-01
 Buref | Lgh 1201, Sofiehemsvägen 76B: 4 Rok, våning 2tr, 97kvm, 14 052,17/månad     Ledig från 2026-12-01
