@@ -258,24 +258,25 @@
 <header>
   <h1>Umeå Bostadsdashboard</h1>
   <div class="stats">
-    <span><strong>57</strong> lägenheter</span>
-    <span><strong id="visible-count">57</strong> visas</span>
-    <span class="new-pill"><strong>3</strong> nya sedan igår</span>
+    <span><strong>59</strong> lägenheter</span>
+    <span><strong id="visible-count">59</strong> visas</span>
+    <span class="new-pill"><strong>2</strong> nya sedan igår</span>
   </div>
-  <span class="updated">Uppdaterad 2026-09-04 15:49</span>
+  <span class="updated">Uppdaterad 2026-09-04 18:51</span>
 </header>
 
 <div class="controls">
   <div class="filter-group">
     <span class="filter-label">Visa</span>
-    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (57)</button>
-    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (3)</button>
+    <button class="status-btn active" onclick="filterStatus('all', this)">Alla (59)</button>
+    <button class="status-btn status-new" onclick="filterStatus('new', this)">Bara nya (2)</button>
   </div>
   <div class="filter-group">
     <span class="filter-label">Hyresvärd</span>
     <button class="filter-btn active" onclick="filterLandlord('all', this)">Alla</button>
 <button class="filter-btn" onclick="filterLandlord('Bostaden', this)">Bostaden (31)</button>
 <button class="filter-btn" onclick="filterLandlord('Buref', this)">Buref (4)</button>
+<button class="filter-btn" onclick="filterLandlord('Heimstaden', this)">Heimstaden (2)</button>
 <button class="filter-btn" onclick="filterLandlord('Lansa', this)">Lansa (3)</button>
 <button class="filter-btn" onclick="filterLandlord('Lerstenen', this)">Lerstenen (4)</button>
 <button class="filter-btn" onclick="filterLandlord('Riksbyggen', this)">Riksbyggen (1)</button>
@@ -762,10 +763,36 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Lansa" data-new="1" data-rent="99999999" data-size="33.0">
+<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="7716" data-size="56.0">
+  <div class="card-top">
+    <h3 class="address">Flintvägen 4 B</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">56 m²</div>
+  <div class="rent">7 716 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Heimstaden</span>
+    <a href="https://heimstaden.com/se/sok-lagenhet/Umea-56m²-1194112-1203" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card is-new" data-landlord="Heimstaden" data-new="1" data-rent="9636" data-size="47.0">
+  <div class="card-top">
+    <h3 class="address">Kvartsvägen 3 B</h3>
+    <span class="badge-new">NY</span>
+  </div>
+  <div class="meta">47 m²</div>
+  <div class="rent">9 636 kr/mån</div>
+  <div class="card-foot">
+    <span class="landlord-tag">Heimstaden</span>
+    <a href="https://heimstaden.com/se/sok-lagenhet/Umea-47m²-1286101-1105" target="_blank" rel="noopener" class="link-btn">Visa annons →</a>
+  </div>
+</div>
+
+<div class="card" data-landlord="Lansa" data-new="0" data-rent="99999999" data-size="33.0">
   <div class="card-top">
     <h3 class="address">Kålhagsvägen 21B</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">1 rok · 33 m² · Inflytt 2026-12-01</div>
   <div class="rent">— kr/mån</div>
@@ -879,10 +906,10 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="14164" data-size="120.0">
+<div class="card" data-landlord="Rikshem" data-new="0" data-rent="14164" data-size="120.0">
   <div class="card-top">
     <h3 class="address">Mariehem Mariehemsvägen 35 C</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">5 rok · 120 m²</div>
   <div class="rent">14 164 kr/mån</div>
@@ -892,10 +919,10 @@
   </div>
 </div>
 
-<div class="card is-new" data-landlord="Rikshem" data-new="1" data-rent="11067" data-size="87.0">
+<div class="card" data-landlord="Rikshem" data-new="0" data-rent="11067" data-size="87.0">
   <div class="card-top">
     <h3 class="address">Mariehem Mariehemsvägen 37 A</h3>
-    <span class="badge-new">NY</span>
+    
   </div>
   <div class="meta">3 rok · 87 m²</div>
   <div class="rent">11 067 kr/mån</div>
