@@ -1,15 +1,20 @@
 Bostaden | Axtorpsvägen 40 | 3970 kr/mån | 22 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2703101010219/
 Bostaden | Axtorpsvägen 42 | 4783 kr/mån | 34 kvm | 1 Rum och kök | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/270320101-113/
 Bostaden | Fysikgränd 11 C | 3520 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301006030004/
+Bostaden | Fysikgränd 13 B | 3640 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301007030105/
 Bostaden | Fysikgränd 17 A | 3640 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301009010103/
 Bostaden | Fysikgränd 27 A | 3660 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-10-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301014010101/
 Bostaden | Fysikgränd 3 F | 3447 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301002060002/
 Bostaden | Fysikgränd 31 A | 3693 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301016010103/
 Bostaden | Fysikgränd 5 D | 3460 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301003050002/
 Bostaden | Fysikgränd 9 A | 3660 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3301005010102/
+Bostaden | Historiegränd 16 A | 6955 kr/mån | 68 kvm | 3 Rum och kök | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3306001010101/
+Bostaden | Kuratorvägen 29 | 6877 kr/mån | 55 kvm | 2 Rum och kök | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3101103010303/
 Bostaden | Pedagoggränd 1 A | 4648 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302002010136/
+Bostaden | Pedagoggränd 1 B | 4824 kr/mån | 20 kvm | 1 Rum och kokv | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302001020440/
 Bostaden | Pedagoggränd 9 B | 4185 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302009010002/
 Bostaden | Pedagoggränd 9 B | 4232 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3302009010210/
+Bostaden | Rullstensgatan 10 | 3866 kr/mån | 21 kvm | Enkelrum | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2802101010213/
 Bostaden | Rullstensgatan 176 | 4513 kr/mån | 28 kvm | Enkelrum | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2802402010201/
 Bostaden | Rullstensgatan 178 | 3950 kr/mån | 21 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2802401010103/
 Bostaden | Stipendiegränd 10 A | 3322 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305013030303/
@@ -17,4 +22,5 @@ Bostaden | Stipendiegränd 10 B | 3289 kr/mån | 20 kvm | Enkelrum | Inflyttning
 Bostaden | Stipendiegränd 10 B | 3362 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305013050102/
 Bostaden | Stipendiegränd 12 B | 3256 kr/mån | 20 kvm | Enkelrum | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305005010004/
 Bostaden | Stipendiegränd 2 C | 6839 kr/mån | 64 kvm | 2 Rum och kök | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305012050201/
+Bostaden | Stipendiegränd 2 C | 6967 kr/mån | 64 kvm | 2 Rum och kök | Inflyttning: 2026-12-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/3305012050301/
 Bostaden | Tuvgränd 5 | 5131 kr/mån | 45 kvm | 1 Rum och kokv | Inflyttning: 2026-11-01 | Länk: https://www.bostaden.umea.se/ledigt/detalj/id/2103101010103/
